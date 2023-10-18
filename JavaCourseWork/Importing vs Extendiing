@@ -1,0 +1,3 @@
+import javax.swing.* vs public class Layouts extends javax.swing.JFrame
+import brings in external class or package to current code while extend creates a new class that inherits the parent class behaviour and properties with it's own specialized function
+Importing doesn't affect the structure or behaviour of imported classes while extending modifies the involved class
