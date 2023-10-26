@@ -15,12 +15,22 @@ public class JavaClasses {
     private int age;
     private static final int LIFESPAN = 100;
 
-    public JavaClasses(String name, String packaged, int length, int age) {
+    
+    
+    public JavaClasses(String name, String packaged) {
         this.name = name;
         this.packaged = packaged;
+      
+    }
+    
+    public JavaClasses(String name, String packaged, int length, int age) {
+        this(name, packaged);
         this.length = length;
         this.age = age;
     }
+    
+    
+    
 
     /**
      * @return the name
@@ -92,6 +102,7 @@ public class JavaClasses {
         int ttl  = LIFESPAN - (age * length);
         return ttl;
     }
+
     
     public int computeTTL(){
      
@@ -123,6 +134,12 @@ public class JavaClasses {
 
         int ttl2 = javaClasses.computeTTL();
         System.out.println("TTL " + ttl +" or " + ttl2);
+        
+        
+        JavaClasses javaClasses1 = new JavaClasses("Name", "Packaged");
+        System.out.println(javaClasses1.getName());
+        System.out.println(javaClasses1.getPackaged());
+        
         
     }
     
