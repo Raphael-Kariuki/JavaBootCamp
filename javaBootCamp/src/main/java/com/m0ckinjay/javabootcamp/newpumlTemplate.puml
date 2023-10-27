@@ -1,0 +1,25 @@
+@startuml
+abstract class Human{
+#name: String
+#age: Integer
+#printTTL(): void
+}
+
+class Musician{
++Studio: String
++genre: String
+}
+
+class Teacher{
++school: String
++Grade: String
+}
+
+
+
+Human <|-- Musician
+Human <|-- Teacher
+
+
+
+@enduml
