@@ -43,9 +43,14 @@ class Created{
     }
     
 }
+interface Planet{
+    String PLANET = "Earth";
+}
+interface Galaxy{
+    String GALAXY = "Milky way";
+}
 
-
-abstract class Human extends Created{
+abstract class Human extends Created implements Planet, Galaxy{
 
     
     private String name;
@@ -81,42 +86,42 @@ abstract class Human extends Created{
      * @return the name
      */
     public String getName() {
-        return name;
+        return getName();
     }
 
     /**
      * @param name the name to set
      */
     public void setName(String name) {
-        this.name = name;
+        this.setName(name);
     }
 
     /**
      * @return the age
      */
     public Integer getAge() {
-        return age;
+        return getAge();
     }
 
     /**
      * @param age the age to set
      */
     public void setAge(Integer age) {
-        this.age = age;
+        this.setAge(age);
     }
 
     /**
      * @return the height
      */
     public Integer getHeight() {
-        return height;
+        return getHeight();
     }
 
     /**
      * @param height the height to set
      */
     public void setHeight(Integer height) {
-        this.height = height;
+        this.setHeight(height);
     }
 
     /**
@@ -154,7 +159,7 @@ class Musician extends Human{
     
 }
 
-class Teacher extends Human{
+class Teacher_ extends Human{
     String institution;
     String Grade;
     private final static int LIFESPAN = 99;
@@ -180,7 +185,7 @@ class Teacher extends Human{
     }
    
     
-    public Teacher(String name, Integer age, Integer height) {
+    public Teacher_(String name, Integer age, Integer height) {
         super(name, age, height);
     }
     @Override
@@ -196,9 +201,9 @@ public class JavaClassesInheritance {
         Musician musician = new Musician("Mojay", 26, 167);
         musician.printTTL();
         
-        Teacher teacher = new Teacher("Mojay", 25, 168);
+        Teacher_ teacher = new Teacher_("Mojay", 25, 168);
         teacher.printTTL();
-        System.out.println("Created " + teacher.getCreated());
+        System.out.println("Created " + teacher.getCreated() + " in planet " + Planet.PLANET + " in the " + Galaxy.GALAXY + " Galaxy" );
     }
     
 }
