@@ -71,13 +71,17 @@ interface Teacherr {
     public void setTrainingInstitute(String trainingInstitute);
     
     default String isGOKEmployed(Boolean gokFlag){
+        sharedLogic();
         if (gokFlag) {
             return "Employee of the GOK";
         } else {
             return "Employee of a privatized org";
         }
     }
-
+    
+    private String sharedLogic(){
+        return "Just a simple example";
+    }
 }
 
 class Professor extends Humanoid implements Doctor, Teacherr {
