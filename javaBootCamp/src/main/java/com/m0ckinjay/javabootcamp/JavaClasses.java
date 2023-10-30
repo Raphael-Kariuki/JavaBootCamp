@@ -8,6 +8,10 @@ package com.m0ckinjay.javabootcamp;
  *
  * @author mo
  */
+
+
+
+
 public class JavaClasses {
     private String name;
     private String packaged;
@@ -24,6 +28,7 @@ public class JavaClasses {
     }
     
     public JavaClasses(String name, String packaged, int length, int age) {
+        //Calls upon the implementation of the preceding constructor
         this(name, packaged);
         this.length = length;
         this.age = age;

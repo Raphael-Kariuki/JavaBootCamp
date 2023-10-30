@@ -69,6 +69,14 @@ interface Teacherr {
     public String getTrainingInstitute();
 
     public void setTrainingInstitute(String trainingInstitute);
+    
+    default String isGOKEmployed(Boolean gokFlag){
+        if (gokFlag) {
+            return "Employee of the GOK";
+        } else {
+            return "Employee of a privatized org";
+        }
+    }
 
 }
 
@@ -133,6 +141,6 @@ public class interfacesClass {
 
     public static void main(String[] args) {
         Professor professor = new Professor("Secondary School", "MTTC", "KMTC", "Paediatric", 56, 167, "Mojay");
-        System.out.println(Doctor.GREETING + professor.getName() + " went to Medical School to further in " + professor.getSpecialization());
+        System.out.println(Doctor.GREETING + professor.getName() + " went to Medical School to further in " + professor.getSpecialization() + " and is currently " + professor.isGOKEmployed(true));
     }
 }
