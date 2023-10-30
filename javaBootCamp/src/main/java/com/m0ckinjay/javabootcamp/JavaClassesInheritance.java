@@ -35,7 +35,17 @@ enum Gender{
     
 }
 
-abstract class Human{
+class Created{
+    private final String created = "Yes";
+
+    public String getCreated() {
+        return created;
+    }
+    
+}
+
+
+abstract class Human extends Created{
 
     
     private String name;
@@ -188,6 +198,7 @@ public class JavaClassesInheritance {
         
         Teacher teacher = new Teacher("Mojay", 25, 168);
         teacher.printTTL();
+        System.out.println("Created " + teacher.getCreated());
     }
     
 }
