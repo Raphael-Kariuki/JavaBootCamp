@@ -9,7 +9,30 @@ package com.m0ckinjay.javabootcamp;
  * @author mo
  */
 
+enum Professionals{
+    DEVELOPER(0,"Dev"),
+    SYSTEM_ADMIN(1,"Sys_admin"),
+    NETWORK_ENGINEER(2,"Net");
+    
+    
+    private Integer index;
+    private String slangString;
 
+    public Integer getIndex() {
+        return index;
+    }
+
+    public String getSlangString() {
+        return slangString;
+    }
+
+    private Professionals(Integer index, String slangString) {
+        this.index = index;
+        this.slangString = slangString;
+    }
+    
+    
+}
 interface  intPrinter{
     String printOut(String nom,String Functionality);
     
@@ -38,6 +61,6 @@ public class FunctionalInterfaces {
         
         //Lambda expression in use
         intPrinterr printerr = ((nom, Functionality) -> nom + " is a " + Functionality);
-        System.out.println(printerr.printOut("Mo", "developer"));
+        System.out.println(printerr.printOut("Mo", Professionals.DEVELOPER.getSlangString()));
     }
 }
