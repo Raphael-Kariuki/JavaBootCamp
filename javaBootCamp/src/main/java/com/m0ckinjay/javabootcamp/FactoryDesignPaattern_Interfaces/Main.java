@@ -14,6 +14,10 @@ interface Computer{
     String getHDD();
     String getCPU();
     String printSpecs();
+    
+    default String printSpecsString(){
+        return "RAM = "+this.getRAM()+", HDD = "+this.getHDD()+" ,CPU = " +this.getCPU();
+    }
 }
 
 class PC implements Computer{
@@ -129,7 +133,7 @@ public class Main {
     public static void main(String[] args) {
         Computer computer1 = new Factory().createProduct("pc","4gb", "500gb", "2.4Ghz");
         Computer computer2 = new Factory().createProduct("server","64gb", "5000gb", "3.4Ghz");
-        System.out.println("Factory PC Config " + computer1.printSpecs());
+        System.out.println("Factory PC Config " + computer1.printSpecsString());
         System.out.println("Factory Server Config " + computer2.printSpecs());
     }
     
