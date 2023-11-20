@@ -17,8 +17,13 @@ public class DeckOfCards {
         
     String[] suits = { "Hearts", "Diamonds", "Clubs", "Spades" };
     
+    
+    /*arrayList to hold the face:suit pair that will be used by the constructor 
+    to initialize the deck of cards object*/
     List<String[]> cardFaceSuit = new ArrayList<>();
     
+    
+    //create the array list
     private List<String[]> getPairStrings(){
         for (String face : faces) {
             for (String suit : suits) {
@@ -29,8 +34,13 @@ public class DeckOfCards {
         return cardFaceSuit;
     }
     
+    //initialize the required number of cards
     private final static int NUMBER_OF_CARDS = 52;
+    
+    //an array to hold the 52 cards
     Card[] deckOfCards = new Card[NUMBER_OF_CARDS];
+    
+    //constructor creates a deckOfCards object that stores the cards in array
     public DeckOfCards() {
         for (int i = 0; i < NUMBER_OF_CARDS; i++) {
             String face = (getPairStrings().get(i))[0];
