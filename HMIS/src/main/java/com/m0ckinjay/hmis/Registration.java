@@ -32,16 +32,12 @@ public class Registration extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>User Registration</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Successful User Registration </h1>");
-            out.println("</body>");
-            out.println("</html>");
+            String userName = request.getParameter("userName");
+            String fName = request.getParameter("fName");
+            String lName = request.getParameter("lName");
+            String emailAddress = request.getParameter("emailAddress");
+            String password = request.getParameter("password");
+            String confPassword = request.getParameter("confPassword");
         }
     }
 
