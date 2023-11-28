@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <form action="Registration" method="POST"
+              oninput="confPassword.setCustomValidity(password.value != confPassword.value ? 'Passwords do not match' : '')">
+            
+            <div class="formLabel">
+                <label>Registration form</label> 
+            </div>
+            
+            <div class="entries">
+                 <label for="fName">First name</label>
+                 <input id="fName" type="text" name="first_name" required> 
+            </div>   
+            
+            <div class="entries">
+                       
+            <label for="lName">Last name</label>
+            <input id="lName" type="text" name="last_name" required >
+            </div>  
+            
+            <div class="entries">
+                      <label for="emailAddress">Email address</label>
+            <input id="emailAddress" type="email" name="emailAddress" required >  
+            </div>   
+            
+            <div class="entries">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" required >
+            </div>   
+          
+            <div class="entries">
+            <label for="confPassword">Confirm password</label>
+            <input id="confPassword" type="password" name="confPassword" required >
+            </div>  
+            
+            <div class="entriesSubmit">
+                <input type="submit" value="Submit">
+            </div>
+          
+     <!--oninput="up2.setCustomValidity(up2.value != up.value ? 'Passwords do not match.' : '')-->
+            
+    
+ 
+      
+            
+            
+        </form>
+    </body>
+</html>
