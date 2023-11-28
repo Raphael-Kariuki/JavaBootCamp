@@ -4,27 +4,42 @@
  */
 package com.m0ckinjay.hmis.dbCons;
 
+import com.m0ckinjay.hmis.Hmisusers;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  *
  * @author mo
  */
 public class dbConn {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         Connection conn = connectToDb("crud", "mo", "mo..");
-        int execUpdate = insertToDb(conn, "mojay", "mockinjay",
-                "mohanaa", "mo@hana.com", "34r3t4t5", getCurrentTimestamp());
-        System.out.println("" + execUpdate);
+//        int execUpdate = insertToDb(conn, "mojay", "mockinjay",
+//                "mohanaa", "mo@hana.com", "34r3t4t5", getCurrentTimestamp());
+         Hmisusers hmisusers = new Hmisusers();
+         hmisusers.setUsername("mohanna");
+         hmisusers.setFirstname("moh");
+         hmisusers.setLastname("anna");
+         hmisusers.setEmailaddress("mo@han.na");
+         hmisusers.setPassword("mohan4646na");
+//         SimpleDateFormat formatter5=new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
+//         Date date5=formatter5.parse(getCurrentTimestamp());
+//         hmisusers.setRegistrationdatetime(date5);
+        int x = insertToDb(conn, hmisusers, getCurrentTimestamp());
+        System.out.println("" + x);
+
     }
     
     public static Connection connectToDb(String dbName, String dbUser, String dbUserPass){
@@ -72,8 +87,7 @@ public class dbConn {
         return formattedDateTime;
     }
     
-    public static int insertToDb(Connection connObj, 
-            String userName,
+    public static int insertToDb(Connection connObj, String userName,
             String firstName,
             String lastName,
             String emailAddress,
@@ -93,6 +107,29 @@ public class dbConn {
             preparedStatement.setString(3, lastName);
             preparedStatement.setString(4, emailAddress);
             preparedStatement.setString(5, password);
+            preparedStatement.setString(6, currentTimestamp);
+            
+            execUpdate = preparedStatement.executeUpdate();
+            System.out.println("Insert success");
+        } catch (SQLException e) {
+            System.out.println("" + e.getMessage());
+        }
+        return execUpdate;
+    }
+     public static int insertToDb(Connection connObj, Hmisusers hmisusers, String currentTimestamp){
+        String insertQueryString = "insert into hmisUsers"
+                + "(userName, firstName,"
+                + "lastName, emailAddress,"
+                + "password, registrationDateTime)"
+                + " values  (?,?,?,?,?,CAST(? as timestamp))";
+        var execUpdate = 0;
+        
+        try (PreparedStatement preparedStatement = connObj.prepareStatement(insertQueryString)){
+            preparedStatement.setString(1, hmisusers.getUsername());
+            preparedStatement.setString(2, hmisusers.getFirstname());
+            preparedStatement.setString(3, hmisusers.getLastname());
+            preparedStatement.setString(4, hmisusers.getEmailaddress());
+            preparedStatement.setString(5, hmisusers.getPassword());
             preparedStatement.setString(6, currentTimestamp);
             
             execUpdate = preparedStatement.executeUpdate();
