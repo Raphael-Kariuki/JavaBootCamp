@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author mo
  */
-class Author implements Serializable{
+public class Author implements Serializable{
     
     private String id;
     private String firstName;
