@@ -22,6 +22,8 @@ public class Book {
     private String link;
     private Date published;
 
+    public Book(){}
+    
     public Book(String id, String title, String description,
             List<Author> authors, Float price, String imageFileName, String link,
             Date published) {
