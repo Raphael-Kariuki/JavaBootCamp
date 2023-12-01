@@ -90,6 +90,11 @@ public class Author {
     public void setBlogURL(String blogURL) {
         this.blogURL = blogURL;
     }
+
+    @Override
+    public String toString() {
+        return "Author{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", blogURL=" + blogURL + '}';
+    }
     
     
     
