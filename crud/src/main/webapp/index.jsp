@@ -62,10 +62,13 @@
                       var lastName = data[i].lastname;
                       var age = data[i].age;
                       var height = data[i].height;
+                      var entryId = data[i].entryid;
                       
 //                      console.log(firstName +""+lastName+""+age+""+height);
                     //create a table row dynamically. Number of rows will be based on the length of return objects
                       table += "<tr>";
+                      
+                      table += "<td>"+entryId+"</td>";
                       table += "<td>"+firstName+"</td>";
                       table += "<td>"+lastName+"</td>";
                       table += "<td>"+age+"</td>";
@@ -78,10 +81,10 @@
                        * 2: The entry id can then be used by passing it dynamically to the url
                        * 
                        * 
-                       */*/
+                       */
                       
                       //<a> delete calls a delete function that hits the delete api onClick()
-                      table += '<td><a href="#'+firstName+'">View</a> | <a onclick="actualDeletion()">Delete</a></td>';
+                      table += '<td><a href="#">View</a> | <a href="" onclick="actualDeletion()">Delete</a></td>';
                       
                       table += "</tr>";
                       
@@ -108,6 +111,7 @@
             <table class="table table-bordered">
                 <thead class="alert-info">
                     <tr>
+                        <th>EntryId</th>
                         <th>FirstName</th>
                         <th>LastName</th>
                         <th>Age</th>
