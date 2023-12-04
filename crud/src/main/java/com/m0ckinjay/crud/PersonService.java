@@ -54,7 +54,7 @@ public class PersonService {
     public List<PersonModel> getallPerson() throws SQLException{
         List<PersonModel> dataFromDb = new ArrayList<>();
         
-        String selectQuery = "select * from person";
+        String selectQuery = "select entryid,* from person";
         PreparedStatement selectPreparedStatement = null;
         ResultSet rs = null;
         
@@ -63,6 +63,7 @@ public class PersonService {
             rs = selectPreparedStatement.executeQuery();
             while (rs.next()) {
                 PersonModel person = new PersonModel();
+                person.setEntryid(rs.getInt("entryid"));
                 person.setFirstname(rs.getString("firstname"));
                 person.setLastname(rs.getString("lastname"));
                 person.setAge(rs.getInt("age"));
