@@ -3,6 +3,7 @@ package com.m0ckinjay.crud;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -65,5 +66,12 @@ public class MyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePersonById(@PathParam("id") int id, PersonModel newPersonModel){
         return Response.ok(personService.updatePersonById(newPersonModel, id)).build();
+    }
+    @Path("{id}/patch")
+    @PATCH
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response patchPersonById(@PathParam("id") int id, PersonModel newPersonModel){
+        return Response.ok(personService.patchPersonById(newPersonModel, id)).build();
     }
 }

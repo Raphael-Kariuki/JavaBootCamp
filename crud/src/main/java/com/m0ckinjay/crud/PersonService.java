@@ -146,5 +146,26 @@ public class PersonService {
         }
         return errorMessage;
     }
+    public String patchPersonById(PersonModel newPerson, int id){
+        String updateQuery = "update public.person set firstname = ? where entryid = ?";
+        PreparedStatement updatePreparedStatement = null;
+        Integer updateStatus = null;
+        String errorMessage = null;
+        
+        try {
+            updatePreparedStatement = conn.prepareStatement(updateQuery);
+            updatePreparedStatement.setString(1, newPerson.getFirstname());
+            updatePreparedStatement.setInt(2, id);
+            
+            updateStatus = updatePreparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            updateStatus = 404;
+            System.out.println("" + e.getMessage());
+            errorMessage = e.getMessage();
+        }
+        return errorMessage;
+    }
+    
+    
      
 }
