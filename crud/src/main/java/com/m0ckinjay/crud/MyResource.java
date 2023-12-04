@@ -7,6 +7,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.sql.SQLException;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -32,5 +33,12 @@ public class MyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createPersonEntry(PersonModel person){
         return Response.ok(personService.insertPerson(person)).build();
+    }
+    
+    @Path("persons")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPersons() throws SQLException{
+        return Response.ok(personService.getallPerson()).build();
     }
 }

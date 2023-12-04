@@ -7,7 +7,10 @@ package com.m0ckinjay.crud;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -48,4 +51,28 @@ public class PersonService {
     }
         return status;
 }
+    public List<PersonModel> getallPerson() throws SQLException{
+        List<PersonModel> dataFromDb = new ArrayList<>();
+        
+        String selectQuery = "select * from person";
+        PreparedStatement selectPreparedStatement = null;
+        ResultSet rs = null;
+        
+        try {
+            selectPreparedStatement = conn.prepareStatement(selectQuery);
+            rs = selectPreparedStatement.executeQuery();
+            while (rs.next()) {
+                PersonModel person = new PersonModel();
+                person.setFirstname(rs.getString("firstname"));
+                person.setLastname(rs.getString("lastname"));
+                person.setAge(rs.getInt("age"));
+                person.setHeight(rs.getDouble("height"));
+                dataFromDb.add(person);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("" + e.getMessage());
+        }
+       return dataFromDb;
+    }
 }
