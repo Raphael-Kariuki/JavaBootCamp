@@ -75,4 +75,31 @@ public class PersonService {
         }
        return dataFromDb;
     }
+     public List<PersonModel> getPersonById(int id) throws SQLException{
+        List<PersonModel> dataFromDb = new ArrayList<>();
+        
+        String selectQuery = "select * from person where entryid = ?";
+        
+        PreparedStatement selectPreparedStatement = null;
+        ResultSet rs = null;
+        
+        try {
+            selectPreparedStatement = conn.prepareStatement(selectQuery);
+            selectPreparedStatement.setInt(1, id);
+
+            rs = selectPreparedStatement.executeQuery();
+            while (rs.next()) {
+                PersonModel person = new PersonModel();
+                person.setFirstname(rs.getString("firstname"));
+                person.setLastname(rs.getString("lastname"));
+                person.setAge(rs.getInt("age"));
+                person.setHeight(rs.getDouble("height"));
+                dataFromDb.add(person);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("" + e.getMessage());
+        }
+       return dataFromDb;
+    }
 }

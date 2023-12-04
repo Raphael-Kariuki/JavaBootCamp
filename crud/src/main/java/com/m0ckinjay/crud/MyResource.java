@@ -4,6 +4,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -40,5 +41,12 @@ public class MyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPersons() throws SQLException{
         return Response.ok(personService.getallPerson()).build();
+    }
+    
+    @Path("persons/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPersons(@PathParam("id") int id) throws SQLException{
+        return Response.ok(personService.getPersonById(id)).build();
     }
 }
