@@ -1,6 +1,7 @@
 package com.m0ckinjay.crud;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -36,17 +37,24 @@ public class MyResource {
         return Response.ok(personService.insertPerson(person)).build();
     }
     
-    @Path("persons")
+    @Path("all/get")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPersons() throws SQLException{
         return Response.ok(personService.getallPerson()).build();
     }
     
-    @Path("persons/{id}")
+    @Path("{id}/get")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPersons(@PathParam("id") int id) throws SQLException{
         return Response.ok(personService.getPersonById(id)).build();
+    }
+    
+    @Path("{id}/delete")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletePersonById(@PathParam("id") int id){
+        return Response.ok(personService.deletePersonById(id)).build();
     }
 }
