@@ -4,6 +4,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -56,5 +57,13 @@ public class MyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deletePersonById(@PathParam("id") int id){
         return Response.ok(personService.deletePersonById(id)).build();
+    }
+    
+    @Path("{id}/update")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePersonById(@PathParam("id") int id, PersonModel newPersonModel){
+        return Response.ok(personService.updatePersonById(newPersonModel, id)).build();
     }
 }
