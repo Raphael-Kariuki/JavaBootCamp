@@ -13,6 +13,13 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
         crossorigin="anonymous"></script>
         <script>
+            
+            function setCookie(cookieName, cookieValue, expiryDate) {
+                var d = new Date();
+                d.setTime(d.getTime() + (expiryDate*24*60*60*1000));
+                var expires = "expires="+ d;
+                document.cookie = cookieName + "=" + cookieValue + "; " + expires + "; path=/JSPs/personView.jsp";
+            }
            //ES6 class that takes a url as input and does a delete request to the url. Hits @Delete web api
               class DeleteHTTP{
                 async delete(url){
@@ -84,7 +91,9 @@
                        */
                       
                       //<a> delete calls a delete function that hits the delete api onClick()
-                      table += '<td><a href="#">View</a> | <a href="#" onclick="actualDeletion('+entryId+')">Delete</a></td>';
+                      
+                      //apparently removing href attr and # in it affects method call leading to fail
+                      table += '<td><a href="/JSPs/personView.jsp" onclick="setCookie()" >View</a> | <a href="#" onclick="actualDeletion('+entryId+')">Delete</a></td>';
                       
                       table += "</tr>";
                       
