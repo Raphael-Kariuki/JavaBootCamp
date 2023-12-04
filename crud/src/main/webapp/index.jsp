@@ -34,10 +34,10 @@
               //based on the argument(id) placed /webapi/person/{id}/delete
               // ---------------
               //function is called when the dynamic <a> tag is clicked with the innerText delete
-              function actualDeletion(){
+              function actualDeletion(entryId){
                     const http = new DeleteHTTP;
               
-              http.delete('/webapi/person/4/delete')
+              http.delete('/webapi/person/'+entryId+'/delete')
               //on success the dom is reloaded to repopulate the table with remaining records
                       .then(() => window.location.reload())
               //on error log the error
@@ -77,14 +77,14 @@
                       //editing can then be done. Currently delete is based on hard-coding the {id} value which is the entryId currently.
                       //Plan is to 
                       /* 1: When selecting from db in service class, select even the entryId which will be passed along and also populated
-                       *    on the table
-                       * 2: The entry id can then be used by passing it dynamically to the url
+                       *    on the table - DONE
+                       * 2: The entry id can then be used by passing it dynamically to the url - DONE - implemented on dynamic delete
                        * 
                        * 
                        */
                       
                       //<a> delete calls a delete function that hits the delete api onClick()
-                      table += '<td><a href="#">View</a> | <a href="" onclick="actualDeletion()">Delete</a></td>';
+                      table += '<td><a href="#">View</a> | <a href="#" onclick="actualDeletion('+entryId+')">Delete</a></td>';
                       
                       table += "</tr>";
                       
