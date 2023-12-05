@@ -14,18 +14,45 @@
         crossorigin="anonymous"></script>-->
         <script>
             
+            
+            //function that receives cookie name to check and returns cookie value
+              function getCookie(name) {
+                var value = "; " + document.cookie;
+                var parts = value.split("; " + name + "=");
+                if (parts.length === 2) return parts.pop().split(";").shift();
+            }
+            
+            //when the window loads , cookie with value supplied to getCookie function is checked for presence, goal is 
+            //is to delete it. It should only exist in .JSPs/personView.jsp
+            //If it exists, set it's value to null and expiry to 1970 
+            window.onload = function(){
+                var entryId = getCookie("entryId");
+                // username
+
+                if (entryId) {
+                  document.cookie = "entryId=; expires=Thu, 1 Jan 1970 12:00:00 UTC; path=/";
+                //   console.log("Cookie 'username' exists with value: " + username);
+                } else {
+                  console.log("Cookie 'entryId' does not exist");
+                }
+            };
+            
+          
+
+
+
+            //function that sets cookie based on values received
             function setCookie(cookieName, cookieValue, expiryDate) {
                 var d = new Date();
                 d.setTime(d.getTime() + (expiryDate*24*60*60*1000));
                 var expires = "expires="+ d;
                 document.cookie = cookieName + "=" + cookieValue + "; " + expires + "; path=/JSPs/personView.jsp";
             }
-            
+            //function called when every individual view<a> tag, argument is supplied when tag is created dynamically  
             function getViewHrefValue(hrefValue){
-//                var hrefValue = document.getElementById("viewPersonHref").name;
-////                alert(hrefValue);
                  setCookie("entryId", hrefValue);
             }
+            
            //ES6 class that takes a url as input and does a delete request to the url. Hits @Delete web api
               class DeleteHTTP{
                 async delete(url){
@@ -58,7 +85,7 @@
               }
             
          
-         //create url
+            //create url
             const endpoint = "/webapi/person/all/get";
             //perform a get request
             const wesPromise = fetch(endpoint);
@@ -102,7 +129,6 @@
 
                                 //<a> delete calls a delete function that hits the delete api onClick()
 
-                                var cookieName_ = "entryId";
                                 //apparently removing href attr and # in it affects method call leading to fail
                                 //pass entryId to function that calls setCookie within
                                 table += '<td><a id="viewPersonHref" name="'+entryId+'" onclick="getViewHrefValue('+entryId+')" href="/JSPs/personView.jsp">View</a> ';
