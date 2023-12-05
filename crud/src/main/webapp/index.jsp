@@ -61,6 +61,10 @@
             //the response has so much, processing is required before proper use, that's why multiple .then
                     .then((response) => response.json())
                     .then((data) => {
+                        
+                        if(data.length !== 0){
+                            
+                      
                         //initialize a table building string and build upon it slowly
                     var table = "";
                     //iterate through the data element and assign the required fields
@@ -86,7 +90,7 @@
                       /* 1: When selecting from db in service class, select even the entryId which will be passed along and also populated
                        *    on the table - DONE
                        * 2: The entry id can then be used by passing it dynamically to the url - DONE - implemented on dynamic delete
-                       * 
+                       * 3: set cookie parameters correctly to pick entryId that will be used to populate JSPs/personView.jsp 
                        * 
                        */
                       
@@ -98,7 +102,11 @@
                       table += "</tr>";
                       
                   }
+                  
                   document.getElementById("results").innerHTML = table;
+                    }else{
+                            document.getElementById("errorDisplay").innerHTML = "<p>No data found</>";
+                        }
                   
       })
               .catch((err) => console.log(err));
@@ -116,7 +124,7 @@
     <div class="col">
         <div class="col-4 bg-secondary"></div>
         <div class="col-8 bg-primary">
-            <p id="errorDisplay"></p>
+            <div id="errorDisplay"></div>
             <table class="table table-bordered">
                 <thead class="alert-info">
                     <tr>
