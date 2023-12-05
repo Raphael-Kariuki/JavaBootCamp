@@ -9,9 +9,9 @@
         
     </head>
     <body>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+<!--    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>-->
         <script>
             
             function setCookie(cookieName, cookieValue, expiryDate) {
@@ -19,6 +19,12 @@
                 d.setTime(d.getTime() + (expiryDate*24*60*60*1000));
                 var expires = "expires="+ d;
                 document.cookie = cookieName + "=" + cookieValue + "; " + expires + "; path=/JSPs/personView.jsp";
+            }
+            
+            function getViewHrefValue(hrefValue){
+//                var hrefValue = document.getElementById("viewPersonHref").name;
+////                alert(hrefValue);
+                 setCookie("entryId", hrefValue);
             }
            //ES6 class that takes a url as input and does a delete request to the url. Hits @Delete web api
               class DeleteHTTP{
@@ -64,52 +70,57 @@
                         
                         if(data.length !== 0){
                             
-                      
-                        //initialize a table building string and build upon it slowly
-                    var table = "";
-                    //iterate through the data element and assign the required fields
-                  for(var i = 0;i < data.length; i++){
-                      var firstName = data[i].firstname;
-                      var lastName = data[i].lastname;
-                      var age = data[i].age;
-                      var height = data[i].height;
-                      var entryId = data[i].entryid;
-                      
-//                      console.log(firstName +""+lastName+""+age+""+height);
-                    //create a table row dynamically. Number of rows will be based on the length of return objects
-                      table += "<tr>";
-                      
-                      table += "<td>"+entryId+"</td>";
-                      table += "<td>"+firstName+"</td>";
-                      table += "<td>"+lastName+"</td>";
-                      table += "<td>"+age+"</td>";
-                      table += "<td>"+height+"</td>";
-                      //TODO - Delete <a> is handled, handle view <a> tag to redirect to a page that will be populated with the entire object details
-                      //editing can then be done. Currently delete is based on hard-coding the {id} value which is the entryId currently.
-                      //Plan is to 
-                      /* 1: When selecting from db in service class, select even the entryId which will be passed along and also populated
-                       *    on the table - DONE
-                       * 2: The entry id can then be used by passing it dynamically to the url - DONE - implemented on dynamic delete
-                       * 3: set cookie parameters correctly to pick entryId that will be used to populate JSPs/personView.jsp 
-                       * 
-                       */
-                      
-                      //<a> delete calls a delete function that hits the delete api onClick()
-                      
-                      //apparently removing href attr and # in it affects method call leading to fail
-                      table += '<td><a href="/JSPs/personView.jsp" onclick="setCookie()" >View</a> | <a href="#" onclick="actualDeletion('+entryId+')">Delete</a></td>';
-                      
-                      table += "</tr>";
-                      
-                  }
-                  
-                  document.getElementById("results").innerHTML = table;
-                    }else{
+
+                                //initialize a table building string and build upon it slowly
+                            var table = "";
+                            //iterate through the data element and assign the required fields
+                            for(var i = 0;i < data.length; i++){
+                                var firstName = data[i].firstname;
+                                var lastName = data[i].lastname;
+                                var age = data[i].age;
+                                var height = data[i].height;
+                                var entryId = data[i].entryid;
+
+                                // console.log(firstName +""+lastName+""+age+""+height);
+                              //create a table row dynamically. Number of rows will be based on the length of return objects
+                                table += "<tr>";
+
+                                table += "<td>"+entryId+"</td>";
+                                table += "<td>"+firstName+"</td>";
+                                table += "<td>"+lastName+"</td>";
+                                table += "<td>"+age+"</td>";
+                                table += "<td>"+height+"</td>";
+                                //TODO - Delete <a> is handled, handle view <a> tag to redirect to a page that will be populated with the entire object details
+                                //editing can then be done. Currently delete is based on hard-coding the {id} value which is the entryId currently.
+                                //Plan is to 
+                                /* 1: When selecting from db in service class, select even the entryId which will be passed along and also populated
+                                 *    on the table - DONE
+                                 * 2: The entry id can then be used by passing it dynamically to the url - DONE - implemented on dynamic delete
+                                 * 3: set cookie parameters correctly to pick entryId that will be used to populate JSPs/personView.jsp 
+                                 * 
+                                 */
+
+                                //<a> delete calls a delete function that hits the delete api onClick()
+
+                                var cookieName_ = "entryId";
+                                //apparently removing href attr and # in it affects method call leading to fail
+                                //pass entryId to function that calls setCookie within
+                                table += '<td><a id="viewPersonHref" name="'+entryId+'" onclick="getViewHrefValue('+entryId+')" href="/JSPs/personView.jsp">View</a> ';
+
+                                table  += '| <a href="#" onclick="actualDeletion('+entryId+')">Delete</a></td>';
+
+                                table += "</tr>";
+
+                            }
+
+                            document.getElementById("results").innerHTML = table;
+                        }else{
                             document.getElementById("errorDisplay").innerHTML = "<p>No data found</>";
                         }
+
                   
-      })
-              .catch((err) => console.log(err));
+                    })
+                    .catch((err) => console.log(err));
       
         </script>
    
