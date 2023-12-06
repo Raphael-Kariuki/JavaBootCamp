@@ -29,18 +29,21 @@
                                 </div>
 
                                 <div class="entries row rounded-3 mb-3">
-                                    <input id="loginusername" type="text" name="loginusername" placeholder="Username" minlength="5" required> 
+                                    <input class="p-2  rounded-3" id="loginusername" type="text" name="loginusername" placeholder="Username" minlength="5" required> 
                                 </div>   
 
 
                                <div class="entries row rounded-3 mb-3 ">
-                                    <input id="loginpassword" type="password" name="loginpassword" placeholder="Password" minlength="10" maxlength="20" required >
+                                    <input class="p-2  rounded-3" id="loginpassword" type="password" name="loginpassword" placeholder="Password" minlength="10" maxlength="20" required >
                                 </div>   
 
                        
 
                                 <div class="entriesSubmit row justify-items-center">
                                     <input  class="col-8 offset-2 btn btn-dark w-75" type="submit" value="Login">
+                                </div>
+                                 <div class="formLabel row mt-3">
+                                     <a class="text-center text-light " href="/JSPs/signUp.jsp">Don't have an account, sign up</a> 
                                 </div>
 
                             </form> 
