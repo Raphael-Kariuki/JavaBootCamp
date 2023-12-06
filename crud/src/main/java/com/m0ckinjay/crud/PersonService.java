@@ -216,12 +216,13 @@ public class PersonService {
     }
     
     public Systemusers checkLogin(String username, String password){
-        Systemusers loginUser = null;
+        Systemusers loginUser = new Systemusers();
         
-        String loginCheckSelectQuery = "select * from public.systemusers where username = ? and password = ?";
+        String loginCheckSelectQuery = "select * from public.systemusers where public.systemusers.username = ? and public.systemusers.password = ?";
         PreparedStatement preparedLoginCheckPreparedStatement = null;
         ResultSet rs  = null;
         String error = "No such user found";
+        System.out.println(username + " "+password);
         try {
             preparedLoginCheckPreparedStatement = conn.prepareStatement(loginCheckSelectQuery);
             preparedLoginCheckPreparedStatement.setString(1, username);
@@ -234,7 +235,7 @@ public class PersonService {
                 loginUser.setUsername(rs.getString("firstname"));
                 loginUser.setEmailaddress(rs.getString("emailaddress"));
             }else{
-                System.out.println("" + error);
+                System.out.println("" +loginUser+ error);
             }
             
         } catch (SQLException e) {
