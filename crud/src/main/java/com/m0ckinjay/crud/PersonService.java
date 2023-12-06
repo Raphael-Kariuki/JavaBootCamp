@@ -51,6 +51,31 @@ public class PersonService {
     }
         return person;
 }
+    public String registerSystemUser(Systemusers newUser){
+        /*
+        INSERT INTO systemusers (username, firstname, lastname, emailaddress, password, log_ts) 
+	VALUES (?,?,?,?,?, DEFAULT)
+
+        */
+        String insertSQLString = " INSERT INTO systemusers (username, firstname, lastname, emailaddress, password, log_ts) \n" +
+"	VALUES (?,?,?,?,?, DEFAULT)";
+        PreparedStatement registerUserPreparedStatement = null;
+        String status = null;
+        try {
+            registerUserPreparedStatement = conn.prepareStatement(insertSQLString);
+            registerUserPreparedStatement.setString(1, newUser.getUsername());
+            registerUserPreparedStatement.setString(2, newUser.getFirstname());
+            registerUserPreparedStatement.setString(3, newUser.getLastname());
+            registerUserPreparedStatement.setString(4, newUser.getEmailaddress());
+            registerUserPreparedStatement.setString(5, newUser.getPassword());
+            status = "" + registerUserPreparedStatement.executeUpdate();
+            
+            
+    }catch(SQLException e){
+            status = e.getMessage();
+    }
+        return status;
+}
     public List<PersonModel> getallPerson() throws SQLException{
         List<PersonModel> dataFromDb = new ArrayList<>();
         
@@ -148,7 +173,7 @@ public class PersonService {
         return errorMessage;
     }
     //why special, method that executes an update should be a PUT, I use POST because forms support 2 methods GET and POST. It works
-    public String specialUpdatePersonById(PersonModel newPerson, int id){
+    public int specialUpdatePersonById(PersonModel newPerson, int id){
         String updateQuery = "update public.person set firstname = ?, lastname = ?, age = ?, height = ? where entryid = ?";
         PreparedStatement updatePreparedStatement = null;
         Integer updateStatus = null;
@@ -168,7 +193,7 @@ public class PersonService {
             System.out.println("" + e.getMessage());
             errorMessage = e.getMessage();
         }
-        return errorMessage;
+        return updateStatus;
     }
     public String patchPersonById(PersonModel newPerson, int id){
         String updateQuery = "update public.person set firstname = ? where entryid = ?";
@@ -190,6 +215,33 @@ public class PersonService {
         return errorMessage;
     }
     
-    
+    public Systemusers checkLogin(String username, String password){
+        Systemusers loginUser = null;
+        
+        String loginCheckSelectQuery = "select * from public.systemusers where username = ? and password = ?";
+        PreparedStatement preparedLoginCheckPreparedStatement = null;
+        ResultSet rs  = null;
+        String error = "No such user found";
+        try {
+            preparedLoginCheckPreparedStatement = conn.prepareStatement(loginCheckSelectQuery);
+            preparedLoginCheckPreparedStatement.setString(1, username);
+            preparedLoginCheckPreparedStatement.setString(2, password);
+            
+            rs = preparedLoginCheckPreparedStatement.executeQuery();
+            
+            if (rs.next()) {
+                
+                loginUser.setUsername(rs.getString("firstname"));
+                loginUser.setEmailaddress(rs.getString("emailaddress"));
+            }else{
+                System.out.println("" + error);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("" + e.getMessage());
+        }
+        return loginUser;
+    }
+
      
 }
