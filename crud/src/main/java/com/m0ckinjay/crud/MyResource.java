@@ -44,6 +44,7 @@ public class MyResource {
     public Response createPersonEntry(PersonModel person){
         return Response.ok(personService.insertPerson(person)).build();
     }
+
     
     @Path("all/get")
     @GET
@@ -96,6 +97,45 @@ public class MyResource {
         Response response = null;
         if (responseInt == 1) {
             response = Response.temporaryRedirect(URI.create("/")).build();
+        }else{
+        response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
+        }
+        return response;
+    }
+    @Path("new/register")
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response registerSystemUser(MultivaluedMap<String, String> formDataMap) throws URISyntaxException{
+          /*
+        By default a multiValued hashMap values are list objects containing the correspondind form data items/values.
+        When fed to a response directly , the json is not nicely formated
+        (key, value(key, value)) insted of (key, value) - soln.Iterate and put in hashMap
+        */
+        //hashMap declaration
+        Map<String,String> formParameters = new HashMap<>();
+
+        //iterate the keys
+        Iterator<String> it = formDataMap.keySet().iterator();
+
+
+        while(it.hasNext()){
+           String theKey = (String)it.next();
+           formParameters.put(theKey,formDataMap.getFirst(theKey));
+        }
+        //initialize user model
+        Systemusers registerUser = new Systemusers();
+        //get form input
+        registerUser.setUsername(formParameters.get("username"));
+        registerUser.setFirstname(formParameters.get("firstname"));
+        registerUser.setLastname(formParameters.get("lastname"));
+        registerUser.setEmailaddress(formParameters.get("emailaddress"));
+        registerUser.setPassword(formParameters.get("password"));
+        
+        String responseInt = personService.registerSystemUser(registerUser);
+        Response response = null;
+        if (responseInt.equals("1")) {
+            response = Response.temporaryRedirect(URI.create("/JSPs/login.jsp")).build();
         }else{
         response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
         }
