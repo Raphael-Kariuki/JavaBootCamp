@@ -55,6 +55,7 @@
                                 <div class="entriesSubmit row justify-items-center">
                                     <input  class="col-8 offset-2 btn btn-dark w-75" type="submit" value="Submit">
                                 </div>
+                                <div><p>${errorMessage}</p></div>
 
                             </form> 
                         </div>
