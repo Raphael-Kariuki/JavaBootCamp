@@ -1,5 +1,6 @@
 package com.m0ckinjay.crud;
 
+import com.m0ckinjay.crud.patient.Patientdetails;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -14,6 +15,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -140,6 +142,66 @@ public class MyResource {
         response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
         }
         return response;
+    }
+    @Path("new/patient/register")
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response registerPatient(MultivaluedMap<String, String> formDataMap) throws URISyntaxException{
+          /*
+        By default a multiValued hashMap values are list objects containing the correspondind form data items/values.
+        When fed to a response directly , the json is not nicely formated
+        (key, value(key, value)) insted of (key, value) - soln.Iterate and put in hashMap
+        */
+        //hashMap declaration
+        Map<String,String> formParameters = new HashMap<>();
+
+        //iterate the keys
+        Iterator<String> it = formDataMap.keySet().iterator();
+
+
+        while(it.hasNext()){
+           String theKey = (String)it.next();
+           formParameters.put(theKey,formDataMap.getFirst(theKey));
+        }
+        System.out.println(""+ formDataMap.values());
+        System.out.println(""+ formDataMap.keySet());
+        System.out.println(""+ formParameters.values());
+        System.out.println(""+ formParameters.keySet());
+        System.out.println("" + formParameters.get("selectSalutation"));
+        //initialize user model
+        Patientdetails registerpatientDetails = new Patientdetails();
+        //get form input
+        SecureRandom secureRandom = new SecureRandom();
+        String mrnNumber = (formParameters.get("pFirstName")).charAt(0) + (formParameters.get("pMiddleName")).charAt(0) +(formParameters.get("pLastName")).charAt(0) + String.valueOf(secureRandom.nextLong(9999));
+        registerpatientDetails.setMrn(mrnNumber);
+        registerpatientDetails.setSalutation(formParameters.get("selectSalutation"));
+        System.out.println("" + registerpatientDetails.getSalutation());
+        registerpatientDetails.setFirsttime(formParameters.get("firsttimeCheckbox"));
+        registerpatientDetails.setPfirstname(formParameters.get("pFirstName"));
+        registerpatientDetails.setPmiddlname(formParameters.get("pMiddleName"));
+        registerpatientDetails.setPlastname(formParameters.get("pLastName"));
+        registerpatientDetails.setPdob(formParameters.get("pdob"));
+        registerpatientDetails.setPphonenumber(formParameters.get("pphoneNumber"));
+        registerpatientDetails.setPcountry(formParameters.get("pcountrySelect"));
+        registerpatientDetails.setPcounty(formParameters.get("pcountySelect"));
+        registerpatientDetails.setNokfirstname(formParameters.get("NOKFirstName"));
+        registerpatientDetails.setNokmiddlename(formParameters.get("NOKMiddleName"));
+        registerpatientDetails.setNoklastname(formParameters.get("NOKLastName"));
+        registerpatientDetails.setNokdob(formParameters.get("NOKdob"));
+        registerpatientDetails.setNokphonenumber(formParameters.get("NOKphoneNumber"));
+        registerpatientDetails.setNokcountry(formParameters.get("NOKcountrySelect"));
+        registerpatientDetails.setNokcounty(formParameters.get("NOKcountySelect"));
+        System.out.println("" + registerpatientDetails);
+    
+        Response response = null;
+        String responseInt = personService.insertPatientrecords(registerpatientDetails);
+//        if (responseInt.equals("1")) {
+//            response = Response.temporaryRedirect(URI.create("/index.jsp")).build();
+//        }else{
+//        response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
+//        }
+        return Response.ok(responseInt).build();
     }
 //    @Path("{id}/update")
 //    @PUT
