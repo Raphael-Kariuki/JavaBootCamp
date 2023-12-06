@@ -33,17 +33,20 @@ public class loginServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 //        response.setContentType("text/html;charset=UTF-8");
+
+            //get values from form parameters
             String username = request.getParameter("loginusername");
             String password = request.getParameter("loginpassword");
             
             PersonService personService = new PersonService();
             try {
                 Systemusers checkLoginUser  = personService.checkLogin(username, password);
+                System.out.println("LogiUser: " + checkLoginUser);
                 String destPage = "/JSPs/signUp.jsp";
                 
-                if (checkLoginUser != null) {
+                if (checkLoginUser.getUsername() != null) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("username", username);
+                    session.setAttribute("user", checkLoginUser);
                     destPage = "/";
                 }else{
                     String message =  "No such user found";
