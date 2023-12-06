@@ -13,42 +13,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
     </head>
        <body class="vh-100">
-        <script>
-            var apiEntryId = 0;
-                 //function that receives cookie name to check and returns cookie value
-              function getCookie(name) {
-                var value = "; " + document.cookie;
-                var parts = value.split("; " + name + "=");
-                if (parts.length === 2) return parts.pop().split(";").shift();
-            }
-            
-      
-                var entryId = getCookie("entryId");
-               
-                console.log(entryId);
-                
-                           //create url
-            const endpoint = "/webapi/person/"+entryId+"/get";
-            //perform a get request
-            const wesPromise = fetch(endpoint);
-            
-            wesPromise.then((response) => response.json())
-                    .then((data) => {
-                        if(data.length !== 0){
-                            var firstName = data.firstname;
-                            var lastName = data.lastname;
-                            var age = data.age;
-                            var height = data.height;
-                            
-                            document.getElementById("firstName").value = firstName;
-                            document.getElementById("lastName").value = lastName;
-                            document.getElementById("age").value = age;
-                            document.getElementById("height").value = height;
-                        
-                        }
-                    });
-            
-        </script>
+        
         
         
    
@@ -58,7 +23,7 @@
                 <div class="col-5 bg-secondary p-3 h-75">
                     <div class="row justify-items-center align-items-center h-100">
                         <div class="col-8 offset-2 h-100">
-                            <form action="Registration" method="POST" novalidate
+                            <form id = "updateForm"  method="POST" novalidate
                             oninput="confPassword.setCustomValidity(password.value != confPassword.value ? 'Passwords do not match' : '')">
 
                     
@@ -80,7 +45,7 @@
 
 
                                 <div class="entriesSubmit row justify-items-center">
-                                    <input  class="col-8 offset-2 btn btn-dark w-75" type="submit" value="Submit">
+                                    <button  class="col-8 offset-2 btn btn-dark w-75" formenctype ="application/x-www-form-urlencoded" formmethod="POST"  id="submitInput" type="submit" >Submit</button>
                                 </div>
 
                             </form> 
@@ -92,6 +57,63 @@
             
             
         </div>
-        
+        <script>
+            class specialUpdateHTTP{
+                async update(url){
+                    const response = await fetch(
+                            url,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+                    return "Update in progress..";
+                }
+            }
+            function actualUpdate(entryId){
+                const updateHttp = new specialUpdateHTTP();
+                console.log('/webapi/person/'+entryId+'/update');
+                updateHttp.update('/webapi/person/'+entryId+'/update')
+                        .then(() => window.location.reload())
+                        .catch((err) => console.log(err));
+            }
+                 //function that receives cookie name to check and returns cookie value
+              function getCookie(name) {
+                var value = "; " + document.cookie;
+                var parts = value.split("; " + name + "=");
+                if (parts.length === 2) return parts.pop().split(";").shift();
+            }
+            
+      
+                var entryId = getCookie("entryId");
+                document.getElementById("submitInput").setAttribute("formaction","/webapi/person/"+entryId+"/update");
+
+               
+                console.log(entryId);
+                
+                           //create url
+            const endpoint = "/webapi/person/"+entryId+"/get";
+//            document.getElementById("updateForm").setAttribute("action", "/webapi/person/"+entryId+"/update_");
+            //perform a get request
+            const wesPromise = fetch(endpoint);
+            
+            wesPromise.then((response) => response.json())
+                    .then((data) => {
+                        if(data.length !== 0){
+                            var firstName = data.firstname;
+                            var lastName = data.lastname;
+                            var age = data.age;
+                            var height = data.height;
+                            
+                            document.getElementById("firstName").value = firstName;
+                            document.getElementById("lastName").value = lastName;
+                            document.getElementById("age").value = age;
+                            document.getElementById("height").value = height;
+                        
+                        }
+                    });
+            
+        </script>
     </body>
 </html>
