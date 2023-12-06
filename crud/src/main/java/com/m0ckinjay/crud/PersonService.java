@@ -4,6 +4,7 @@
  */
 package com.m0ckinjay.crud;
 
+import com.m0ckinjay.crud.patient.Patientdetails;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,22 +19,22 @@ import java.util.List;
  */
 public class PersonService {
     Connection conn;
-    
+
     public PersonService(){
         try {
             String jdbcUrl = "jdbc:postgresql://localhost:5432/";
             String dbName = "crud";
             String dbUser = "mo";
             String dbUserPass = "mo..";
-            
+
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(String.format(jdbcUrl+dbName), dbUser, dbUserPass);
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(" " + e.getMessage());
         }
-    
+
     }
-    
+
     public PersonModel insertPerson(PersonModel person){
         String insertSQLString = "insert into person(firstName, lastName, age, height) values (?,?,?,?)";
         String status = null;
@@ -43,17 +44,50 @@ public class PersonService {
             insertPreparedStatement.setString(2, person.getLastname());
             insertPreparedStatement.setInt(3, person.getAge());
             insertPreparedStatement.setDouble(4, person.getHeight());
-            
+
             status = String.valueOf(insertPreparedStatement.executeUpdate());
-            
+
     }catch(SQLException e){
             status = e.getMessage();
     }
         return person;
 }
+
+    public String insertPatientrecords(Patientdetails newPatient){
+        String insertSQLString = "insert into patientdetails( mrn,salutation,firsttime,pfirstname,pmiddlname,plastname,pdob,"
+                + "pphonenumber,pcountry,pcounty,  nokfirstname,  nokmiddlename,noklastname,  nokdob,  nokphonenumber,\n" +
+"             nokcountry,  nokcounty,  log_ts) values(?,?,?,?,?,?,CAST(? as date),?,?,?,?,?,?,CAST(? as date),?,?,?,DEFAULT)";
+        String status = null;
+        try {
+            PreparedStatement insertPreparedStatement = conn.prepareStatement(insertSQLString);
+            insertPreparedStatement.setString(1, newPatient.getMrn());
+            insertPreparedStatement.setString(2, newPatient.getSalutation());
+            insertPreparedStatement.setString(3, newPatient.getFirsttime());
+            insertPreparedStatement.setString(4, newPatient.getPfirstname());
+            insertPreparedStatement.setString(5, newPatient.getPmiddlname());
+            insertPreparedStatement.setString(6, newPatient.getPlastname());
+            insertPreparedStatement.setString(7, newPatient.getPdob());
+            insertPreparedStatement.setString(8, newPatient.getPphonenumber());
+            insertPreparedStatement.setString(9, newPatient.getPcountry());
+            insertPreparedStatement.setString(10, newPatient.getPcounty());
+            insertPreparedStatement.setString(11, newPatient.getNokfirstname());
+            insertPreparedStatement.setString(12, newPatient.getNokmiddlename());
+            insertPreparedStatement.setString(13, newPatient.getNoklastname());
+            insertPreparedStatement.setString(14, newPatient.getNokdob());
+            insertPreparedStatement.setString(15, newPatient.getNokphonenumber());
+            insertPreparedStatement.setString(16, newPatient.getNokcountry());
+            insertPreparedStatement.setString(17, newPatient.getNokcounty());
+
+            status = String.valueOf(insertPreparedStatement.executeUpdate());
+
+    }catch(SQLException e){
+            status = e.getMessage();
+    }
+        return status;
+}
     public String registerSystemUser(Systemusers newUser){
         /*
-        INSERT INTO systemusers (username, firstname, lastname, emailaddress, password, log_ts) 
+        INSERT INTO systemusers (username, firstname, lastname, emailaddress, password, log_ts)
 	VALUES (?,?,?,?,?, DEFAULT)
 
         */
@@ -69,8 +103,8 @@ public class PersonService {
             registerUserPreparedStatement.setString(4, newUser.getEmailaddress());
             registerUserPreparedStatement.setString(5, newUser.getPassword());
             status = "" + registerUserPreparedStatement.executeUpdate();
-            
-            
+
+
     }catch(SQLException e){
             status = e.getMessage();
     }
@@ -78,11 +112,11 @@ public class PersonService {
 }
     public List<PersonModel> getallPerson() throws SQLException{
         List<PersonModel> dataFromDb = new ArrayList<>();
-        
+
         String selectQuery = "select entryid,* from person";
         PreparedStatement selectPreparedStatement = null;
         ResultSet rs = null;
-        
+
         try {
             selectPreparedStatement = conn.prepareStatement(selectQuery);
             rs = selectPreparedStatement.executeQuery();
@@ -102,14 +136,14 @@ public class PersonService {
        return dataFromDb;
     }
     public PersonModel getPersonById(int id) throws SQLException{
-        
+
         String selectQuery = "select * from person where entryid = ?";
-        
+
         PreparedStatement selectPreparedStatement = null;
         ResultSet rs = null;
         PersonModel person = new PersonModel();
 
-        
+
         try {
             selectPreparedStatement = conn.prepareStatement(selectQuery);
             selectPreparedStatement.setInt(1, id);
@@ -130,17 +164,17 @@ public class PersonService {
     }
     public int deletePersonById(int id){
         String deleteQuery = "delete from person where entryid = ?";
-        
+
         PreparedStatement deletePreparedStatement = null;
         Integer deleteStatus = null;
-        
+
         try {
             deletePreparedStatement = conn.prepareStatement(deleteQuery);
             deletePreparedStatement.setInt(1, id);
             /*
             *ResultSet 	executeQuery() - Executes the SQL query in this PreparedStatement object and returns the ResultSet object generated by the query.
-            *int executeUpdate() - Executes the SQL statement in this PreparedStatement object, 
-                which must be an SQL Data Manipulation Language (DML) statement, such as INSERT, UPDATE or DELETE; 
+            *int executeUpdate() - Executes the SQL statement in this PreparedStatement object,
+                which must be an SQL Data Manipulation Language (DML) statement, such as INSERT, UPDATE or DELETE;
                 or an SQL statement that returns nothing, such as a DDL statement.
             */
             deleteStatus = deletePreparedStatement.executeUpdate();
@@ -149,13 +183,13 @@ public class PersonService {
         }
         return deleteStatus;
     }
-    
+
     public String updatePersonById(PersonModel newPerson, int id){
         String updateQuery = "update public.person set firstname = ?, lastname = ?, age = ?, height = ? where entryid = ?";
         PreparedStatement updatePreparedStatement = null;
         Integer updateStatus = null;
         String errorMessage = null;
-        
+
         try {
             updatePreparedStatement = conn.prepareStatement(updateQuery);
             updatePreparedStatement.setString(1, newPerson.getFirstname());
@@ -163,7 +197,7 @@ public class PersonService {
             updatePreparedStatement.setInt(3, newPerson.getAge());
             updatePreparedStatement.setDouble(4, newPerson.getHeight());
             updatePreparedStatement.setInt(5, id);
-            
+
             updateStatus = updatePreparedStatement.executeUpdate();
         } catch (SQLException e) {
             updateStatus = 404;
@@ -178,7 +212,7 @@ public class PersonService {
         PreparedStatement updatePreparedStatement = null;
         Integer updateStatus = null;
         String errorMessage = null;
-        
+
         try {
             updatePreparedStatement = conn.prepareStatement(updateQuery);
             updatePreparedStatement.setString(1, newPerson.getFirstname());
@@ -186,7 +220,7 @@ public class PersonService {
             updatePreparedStatement.setInt(3, newPerson.getAge());
             updatePreparedStatement.setDouble(4, newPerson.getHeight());
             updatePreparedStatement.setInt(5, id);
-            
+
             updateStatus = updatePreparedStatement.executeUpdate();
         } catch (SQLException e) {
             updateStatus = 404;
@@ -200,12 +234,12 @@ public class PersonService {
         PreparedStatement updatePreparedStatement = null;
         Integer updateStatus = null;
         String errorMessage = null;
-        
+
         try {
             updatePreparedStatement = conn.prepareStatement(updateQuery);
             updatePreparedStatement.setString(1, newPerson.getFirstname());
             updatePreparedStatement.setInt(2, id);
-            
+
             updateStatus = updatePreparedStatement.executeUpdate();
         } catch (SQLException e) {
             updateStatus = 404;
@@ -214,10 +248,10 @@ public class PersonService {
         }
         return errorMessage;
     }
-    
+
     public Systemusers checkLogin(String username, String password){
         Systemusers loginUser = new Systemusers();
-        
+
         String loginCheckSelectQuery = "select * from public.systemusers where public.systemusers.username = ? and public.systemusers.password = ?";
         PreparedStatement preparedLoginCheckPreparedStatement = null;
         ResultSet rs  = null;
@@ -227,22 +261,22 @@ public class PersonService {
             preparedLoginCheckPreparedStatement = conn.prepareStatement(loginCheckSelectQuery);
             preparedLoginCheckPreparedStatement.setString(1, username);
             preparedLoginCheckPreparedStatement.setString(2, password);
-            
+
             rs = preparedLoginCheckPreparedStatement.executeQuery();
-            
+
             if (rs.next()) {
-                
-                loginUser.setUsername(rs.getString("firstname"));
+
+                loginUser.setUsername(rs.getString("username"));
                 loginUser.setEmailaddress(rs.getString("emailaddress"));
             }else{
-                System.out.println("" +loginUser+ error);
+                System.out.println("" + error);
             }
-            
+
         } catch (SQLException e) {
-            System.out.println("" + e.getMessage());
+            System.out.println("Exception" + e.getMessage());
         }
         return loginUser;
     }
 
-     
+
 }
