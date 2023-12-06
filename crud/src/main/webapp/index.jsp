@@ -37,6 +37,7 @@
                 }
             };
             
+            
           
 
 
@@ -141,7 +142,7 @@
 
                             document.getElementById("results").innerHTML = table;
                         }else{
-                            document.getElementById("errorDisplay").innerHTML = "<p>No data found</>";
+                            document.getElementById("errorDisplay").innerHTML = '<p>No data found</p><input id="btnCreateEntry" type="button" value="Add entry">';
                         }
 
                   
@@ -153,15 +154,28 @@
 
 
     <nav class="navbar">
-        <div class="container-fluid">
-            <p>Populate table</p>
+        <div class="container">
+            <div class="row w-100">
+                <div class="col-10 border border-3 border-dark">
+                    <div class="row align-content-center">
+                        <p class="text-start text-dark ">Welcome ${user.username}</p>
+
+                    </div>
+                </div>
+                <div class="col-2 bg-dark">
+                    <a href="/logout" class="text-center text-light">Logout</a>
+                </div>
+            </div>
         </div>
         
     </nav>
-    <div class="col">
-        <div class="col-4 bg-secondary"></div>
-        <div class="col-8 bg-primary">
-            <div id="errorDisplay"></div>
+    <div class="container-fluid">
+                    <div id="errorDisplay"></div>
+                
+          
+                    
+
+        <div class="col bg-primary">
             <table class="table table-bordered">
                 <thead class="alert-info">
                     <tr>
