@@ -147,6 +147,29 @@ public class PersonService {
         }
         return errorMessage;
     }
+    //why special, method that executes an update should be a PUT, I use POST because forms support 2 methods GET and POST. It works
+    public String specialUpdatePersonById(PersonModel newPerson, int id){
+        String updateQuery = "update public.person set firstname = ?, lastname = ?, age = ?, height = ? where entryid = ?";
+        PreparedStatement updatePreparedStatement = null;
+        Integer updateStatus = null;
+        String errorMessage = null;
+        
+        try {
+            updatePreparedStatement = conn.prepareStatement(updateQuery);
+            updatePreparedStatement.setString(1, newPerson.getFirstname());
+            updatePreparedStatement.setString(2, newPerson.getLastname());
+            updatePreparedStatement.setInt(3, newPerson.getAge());
+            updatePreparedStatement.setDouble(4, newPerson.getHeight());
+            updatePreparedStatement.setInt(5, id);
+            
+            updateStatus = updatePreparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            updateStatus = 404;
+            System.out.println("" + e.getMessage());
+            errorMessage = e.getMessage();
+        }
+        return errorMessage;
+    }
     public String patchPersonById(PersonModel newPerson, int id){
         String updateQuery = "update public.person set firstname = ? where entryid = ?";
         PreparedStatement updatePreparedStatement = null;
