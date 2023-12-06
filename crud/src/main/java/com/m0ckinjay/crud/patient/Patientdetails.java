@@ -20,10 +20,10 @@ import javax.persistence.TemporalType;
  *
  * @author mo
  */
-@Entity
-@Table(catalog = "crud", schema = "public")
-@NamedQueries({
-    @NamedQuery(name = "Patientdetails.findAll", query = "SELECT p FROM Patientdetails p")})
+//@Entity
+//@Table(catalog = "crud", schema = "public")
+//@NamedQueries({
+//    @NamedQuery(name = "Patientdetails.findAll", query = "SELECT p FROM Patientdetails p")})
 public class Patientdetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +35,7 @@ public class Patientdetails implements Serializable {
     @Basic(optional = false)
     private String salutation;
     @Basic(optional = false)
-    private boolean firsttime;
+    private String firsttime;
     @Basic(optional = false)
     private String pfirstname;
     @Basic(optional = false)
@@ -77,7 +77,7 @@ public class Patientdetails implements Serializable {
     }
 
     public Patientdetails(String mrn, int entryid, String salutation,
-            boolean firsttime, String pfirstname, String pmiddlname,
+            String firsttime, String pfirstname, String pmiddlname,
             String plastname, String pdob, String pphonenumber, String pcountry,
             String pcounty, String nokfirstname, String nokmiddlename,
             String noklastname, String nokdob, String nokphonenumber,
@@ -127,11 +127,11 @@ public class Patientdetails implements Serializable {
         this.salutation = salutation;
     }
 
-    public boolean getFirsttime() {
+    public String getFirsttime() {
         return firsttime;
     }
 
-    public void setFirsttime(boolean firsttime) {
+    public void setFirsttime(String firsttime) {
         this.firsttime = firsttime;
     }
 
