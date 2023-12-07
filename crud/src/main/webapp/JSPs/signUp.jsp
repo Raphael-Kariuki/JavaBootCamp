@@ -30,32 +30,35 @@
                                 </div>
 
                                 <div class="entries row rounded-3 mb-3">
-                                    <input id="username" type="text" name="username" placeholder="Username" minlength="5" required> 
+                                    <input class="p-2 rounded-3" id="username" type="text" name="username" placeholder="Username" minlength="5" required> 
                                 </div>   
 
                                 <div class="entries row rounded-3 mb-3">
-                                    <input id="firstname" type="text" name="firstname" placeholder="First name" required >
+                                    <input class="p-2  rounded-3" id="firstname" type="text" name="firstname" placeholder="First name" required >
                                 </div>  
                                 <div class="entries row rounded-3 mb-3">
-                                    <input id="lastname" type="text" name="lastname" placeholder="Last name" required >
+                                    <input class="p-2  rounded-3" id="lastname" type="text" name="lastname" placeholder="Last name" required >
                                 </div>  
 
                                <div class="entries row rounded-3 mb-3 ">
-                                    <input id="emailAddress" type="email" name="emailaddress" placeholder="Email address" required >  
+                                    <input class="p-2  rounded-3" id="emailAddress" type="email" name="emailaddress" placeholder="Email address" required >  
                                 </div>   
 
                                <div class="entries row rounded-3 mb-3 ">
-                                    <input id="password" type="password" name="password" placeholder="Password" minlength="10" maxlength="20" required >
+                                    <input class="p-2  rounded-3" id="password" type="password" name="password" placeholder="Password" minlength="10" maxlength="20" required >
                                 </div>   
 
                                <div class="entries row rounded-3 mb-3">
-                                   <input id="confPassword" type="password" name="confPassword" placeholder="Confirm password"  required minlength="10" maxlength="20">
+                                   <input class="p-2  rounded-3" id="confPassword" type="password" name="confPassword" placeholder="Confirm password"  required minlength="10" maxlength="20">
                                 </div>  
 
                                 <div class="entriesSubmit row justify-items-center">
                                     <input  class="col-8 offset-2 btn btn-dark w-75" type="submit" value="Submit">
                                 </div>
                                 <div><p>${errorMessage}</p></div>
+                                   <div class="formLabel row mt-3">
+                                     <a class="text-center text-light " href="/JSPs/login.jsp">Already have an account, login</a> 
+                                </div>
 
                             </form> 
                         </div>
