@@ -62,7 +62,7 @@ public class PersonService {
             PreparedStatement insertPreparedStatement = conn.prepareStatement(insertSQLString);
             insertPreparedStatement.setString(1, newPatient.getMrn());
             insertPreparedStatement.setString(2, newPatient.getSalutation());
-            insertPreparedStatement.setString(3, ((newPatient.getFirsttime() == "") ? "false" : "true"));
+            insertPreparedStatement.setString(3, (("".equals(newPatient.getFirsttime())) ? "false" : "true"));
             insertPreparedStatement.setString(4, newPatient.getPfirstname());
             insertPreparedStatement.setString(5, newPatient.getPmiddlname());
             insertPreparedStatement.setString(6, newPatient.getPlastname());
@@ -147,7 +147,7 @@ public class PersonService {
             rs = selectPreparedStatement.executeQuery();
             while (rs.next()) {
                 Patientdetails singlePatientdetails = new Patientdetails();
-                singlePatientdetails.setEntryid(rs.getString("entryid"));
+                singlePatientdetails.setEntryid(Integer.parseInt(rs.getString("entryid")));
                 singlePatientdetails.setMrn(rs.getString("mrn"));
                 singlePatientdetails.setSalutation(rs.getString("salutation"));
                 singlePatientdetails.setFirsttime(rs.getString("firsttime"));
