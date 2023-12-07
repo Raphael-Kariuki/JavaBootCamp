@@ -194,15 +194,18 @@
             //cookie value that will be used in delete and update URI to hit the right resource
             var mrn = getCookie("mrn");
             console.log(mrn);
+            //set formaction attr on the submit button to send form data to the specialUpdate resource to update db values
+            document.getElementById("submitInput").setAttribute("formaction", "/webapi/person/patientdetails/" + mrn + "/update");
             const singlePatientDetailsAPIURI = "/webapi/person/patientdetails/" + mrn + "/get";
             const singlePatientDetailsPromise = fetch(singlePatientDetailsAPIURI);
             singlePatientDetailsPromise
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log(data);
+                        console.log(data.firsttime);
                         if (data.length !== 0) {
                             document.getElementById("_salutationSelect").value = data.salutation;
-                            document.getElementById("_fistTimeVisitBoolean").value = data.firsttime;
+                            var check = (data.firsttime === 'false') ? false : true;
+                            document.getElementById("_fistTimeVisitBoolean").checked = check;
                             document.getElementById("_firstName").value = data.pfirstname;
                             document.getElementById("_middleName").value = data.pmiddlname;
                             document.getElementById("_lastName").value = data.plastname;
@@ -221,8 +224,7 @@
                         }
                     });
 
-            //set formaction attr on the submit button to send form data to the specialUpdate resource to update db values
-            document.getElementById("submitInput").setAttribute("formaction", "/webapi/person/patientdetails/" + mrn + "/update");
+            
 
         </script>
 
