@@ -62,7 +62,7 @@ public class PersonService {
             PreparedStatement insertPreparedStatement = conn.prepareStatement(insertSQLString);
             insertPreparedStatement.setString(1, newPatient.getMrn());
             insertPreparedStatement.setString(2, newPatient.getSalutation());
-            insertPreparedStatement.setString(3, newPatient.getFirsttime());
+            insertPreparedStatement.setString(3, ((newPatient.getFirsttime() == "") ? "false" : "true"));
             insertPreparedStatement.setString(4, newPatient.getPfirstname());
             insertPreparedStatement.setString(5, newPatient.getPmiddlname());
             insertPreparedStatement.setString(6, newPatient.getPlastname());
