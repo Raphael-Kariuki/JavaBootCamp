@@ -228,6 +228,46 @@ public class PersonService {
         }
     return singlePatientdetails;
     }
+        //why special, method that executes an update should be a PUT, I use POST because forms support 2 methods GET and POST. It works
+    public String specialUpdatePatientDetailsByMRN(Patientdetails updatePatientdetails, String mrn){
+        /*
+        mrn,salutation,firsttime,pfirstname,pmiddlname,plastname,pdob,"
+                + "pphonenumber,pcountry,pcounty,  nokfirstname,  nokmiddlename,noklastname,  nokdob,  nokphonenumber,\n" +
+"             nokcountry,  nokcounty
+        */
+        String updateQuery = "update public.patientdetails set salutation = ?,firsttime = ?,pfirstname = ?,pmiddlename =? ,plastname = ?,pdob = CAST(? as date) ,"
+                + "pphonenumber = ?,pcountry = ?,pcounty = ?,  nokfirstname = ?,  nokmiddlename = ?,noklastname = ? ,  nokdob = CAST(? as date),  nokphonenumber = ?,"
+                + "nokcountry = ?,  nokcounty = ? where mrn = ? ";
+        PreparedStatement updatePreparedStatement = null;
+        String updateStatus = null;
+        System.out.println("" + mrn + updatePatientdetails);
+        try {
+            updatePreparedStatement = conn.prepareStatement(updateQuery);
+            updatePreparedStatement.setString(1, updatePatientdetails.getSalutation());
+            updatePreparedStatement.setString(2, updatePatientdetails.getFirsttime());
+            updatePreparedStatement.setString(3, updatePatientdetails.getPfirstname());
+            updatePreparedStatement.setString(4, updatePatientdetails.getPmiddlname());
+            updatePreparedStatement.setString(5, updatePatientdetails.getPlastname());
+            updatePreparedStatement.setString(6, updatePatientdetails.getPdob());
+            updatePreparedStatement.setString(7, updatePatientdetails.getPphonenumber());
+            updatePreparedStatement.setString(8, updatePatientdetails.getPcountry());
+            updatePreparedStatement.setString(9, updatePatientdetails.getPcounty());
+            updatePreparedStatement.setString(10, updatePatientdetails.getNokfirstname());
+            updatePreparedStatement.setString(11, updatePatientdetails.getNokmiddlename());
+            updatePreparedStatement.setString(12, updatePatientdetails.getNoklastname());
+            updatePreparedStatement.setString(13, updatePatientdetails.getNokdob());
+            updatePreparedStatement.setString(14, updatePatientdetails.getNokphonenumber());
+            updatePreparedStatement.setString(15, updatePatientdetails.getNokcountry());
+            updatePreparedStatement.setString(16, updatePatientdetails.getNokcounty());
+            updatePreparedStatement.setString(17, mrn);
+
+            updateStatus = String.valueOf(updatePreparedStatement.executeUpdate());
+        } catch (SQLException e) {
+            System.out.println("" + e.getMessage());
+            updateStatus = e.getMessage();
+        }
+        return updateStatus;
+    }
     public PersonModel getPersonById(int id) throws SQLException{
 
         String selectQuery = "select * from person where entryid = ?";
