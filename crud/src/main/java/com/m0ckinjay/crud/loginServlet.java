@@ -47,7 +47,7 @@ public class loginServlet extends HttpServlet {
                 if (checkLoginUser.getUsername() != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", checkLoginUser);
-                    destPage = "/";
+                    destPage = "/JSPs/patientDetailsView.jsp";
                 }else{
                     String message =  "No such user found";
                     request.setAttribute("errorMessage", message);
