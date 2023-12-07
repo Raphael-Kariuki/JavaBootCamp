@@ -1,0 +1,110 @@
+<%-- 
+    Document   : patientDetailsView
+    Created on : Dec 7, 2023, 7:47:22 AM
+    Author     : mo
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>View patient details</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+    </head>
+    <body>
+        <script>
+            const patientdetailsWebApiURI = "/webapi/person/patientdetails/all/get";
+            const patientDetailsDataPromise = fetch(patientdetailsWebApiURI);
+
+            patientDetailsDataPromise
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.length !== 0) {
+                            var table = "";
+
+                            for (var i = 0; i < data.length; i++) {
+                                var mrn = data[i].mrn;
+                                var patientFullNames = data[i].pfirstname + " " + data[i].pmiddlname + " " + data[i].plastname;
+                                var page = data[i].pdob;
+                                var pphonenumber = data[i].pphonenumber;
+
+                                table += "<tr>";
+                                table += "<td>" + mrn + " </td>";
+                                table += "<td>" + patientFullNames + " </td>";
+                                table += "<td>" + page + " </td>";
+                                table += "<td>" + pphonenumber + " </td>";
+
+                                table += '<td><a href="#" id="viewpatientdetails" name="' + mrn + '" >View</a> |';
+                                table += ' <a href="#" id="deletePatientdetails" onclick=actualDeletion(\"' +mrn +'\")>Delete</a></td>';
+                                table += "</tr>";
+
+                            }
+                            document.getElementById("results").innerHTML = table;
+                        } else {
+                            document.getElementById("errorDisplay").innerHTML = '<p>No data found</p><input id="btnCreateEntry" type="button" value="Add entry">';
+                        }
+                    });
+
+            class DeletePatientRecord {
+                async delete(url) {
+                    const response = await fetch(url,
+                            {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-type': 'application/json'
+                                }
+                            }
+                    );
+                }
+            }
+            function actualDeletion(mrn) {
+                const deleteES6Class = new DeletePatientRecord;
+
+                deleteES6Class.delete('/webapi/person/patientdetails/' + mrn + '/delete')
+                 //on success the dom is reloaded to repopulate the table with remaining records
+                        .then(() => window.location.reload())
+                        //on error log the error
+                        .catch(err => console.log(err));;
+            }
+        </script>
+
+        <nav class="navbar">
+            <div class="container">
+                <div class="row w-100">
+                    <div class="col-10 border border-3 border-dark">
+                        <div class="row align-content-center">
+                            <p class="text-start text-dark ">Welcome ${user.username}</p>
+
+                        </div>
+                    </div>
+                    <div class="col-2 bg-dark">
+                        <a href="/logout" class="text-center text-light">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+        <div class="container-fluid">
+            <div id="errorDisplay"></div>
+
+
+
+
+            <div class="col bg-primary">
+                <table class="table table-bordered">
+                    <thead class="alert-info">
+                        <tr>
+                            <th>MRN</th>
+                            <th>Full Names</th>
+                            <th>Age</th>
+                            <th>Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results"></tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
