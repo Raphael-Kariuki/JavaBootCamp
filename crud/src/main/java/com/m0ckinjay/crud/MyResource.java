@@ -198,30 +198,41 @@ public class MyResource {
         String responseInt = personService.insertPatientrecords(registerpatientDetails);
         if (responseInt.equals("1")) {
             response = Response.temporaryRedirect(URI.create("/index.jsp")).build();
-        }else{
-        response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
+        } else {
+            response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
         }
         return response;
     }
-    
+
     @Path("patientdetails/all/get")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPatientDetails() throws SQLException{
+    public Response getAllPatientDetails() throws SQLException {
         Response response = null;
         List<Patientdetails> patientDetailsDataSet = personService.getallPatientDetails();
         if (patientDetailsDataSet.isEmpty()) {
             response = Response.noContent().build();
-        }else{
+        } else {
             response = Response.ok(patientDetailsDataSet).build();
         }
         return response;
     }
+
     @Path("patientdetails/{mrn}/delete")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePatientdetailsByMRN(@PathParam("mrn") String mrn){
+    public Response deletePatientdetailsByMRN(@PathParam("mrn") String mrn) {
         Response response = "1".equals(personService.deletePatientDetailsByMRN(mrn)) ? Response.ok().build() : Response.notModified().build();
+        return response;
+    }
+
+    @Path("patientdetails/{mrn}/get")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPatientdetailsByMRN(@PathParam("mrn") String mrn) {
+        Response response = null;
+        Patientdetails patientdetails = personService.getPatientDetailsByMRN(mrn);
+        response = (patientdetails == null) ? Response.noContent().build() : Response.ok(patientdetails).build();
         return response;
     }
 //    @Path("{id}/update")
