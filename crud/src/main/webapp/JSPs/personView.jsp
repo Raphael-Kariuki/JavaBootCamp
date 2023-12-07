@@ -23,8 +23,7 @@
                 <div class="col-5 bg-secondary p-3 h-75">
                     <div class="row justify-items-center align-items-center h-100">
                         <div class="col-8 offset-2 h-100">
-                            <form id = "updateForm"  method="POST" novalidate
-                            oninput="confPassword.setCustomValidity(password.value != confPassword.value ? 'Passwords do not match' : '')">
+                            <form id = "updateForm"  method="POST">
 
                     
 
@@ -58,26 +57,26 @@
             
         </div>
         <script>
-            class specialUpdateHTTP{
-                async update(url){
-                    const response = await fetch(
-                            url,
-                    {
-                        method: 'PUT',
-                        headers: {
-                            'Content-type': 'application/x-www-form-urlencoded'
-                        }
-                    });
-                    return "Update in progress..";
-                }
-            }
-            function actualUpdate(entryId){
-                const updateHttp = new specialUpdateHTTP();
-                console.log('/webapi/person/'+entryId+'/update');
-                updateHttp.update('/webapi/person/'+entryId+'/update')
-                        .then(() => window.location.reload())
-                        .catch((err) => console.log(err));
-            }
+//            class specialUpdateHTTP{
+//                async update(url){
+//                    const response = await fetch(
+//                            url,
+//                    {
+//                        method: 'PUT',
+//                        headers: {
+//                            'Content-type': 'application/x-www-form-urlencoded'
+//                        }
+//                    });
+//                    return "Update in progress..";
+//                }
+//            }
+//            function actualUpdate(entryId){
+//                const updateHttp = new specialUpdateHTTP();
+//                console.log('/webapi/person/'+entryId+'/update');
+//                updateHttp.update('/webapi/person/'+entryId+'/update')
+//                        .then(() => window.location.reload())
+//                        .catch((err) => console.log(err));
+//            }
                  //function that receives cookie name to check and returns cookie value
               function getCookie(name) {
                 var value = "; " + document.cookie;
@@ -85,16 +84,16 @@
                 if (parts.length === 2) return parts.pop().split(";").shift();
             }
             
-      
+      //cookie value that will be used in delete and update URI to hit the right resource
                 var entryId = getCookie("entryId");
+                //set formaction attr on the submit button to send form data to the specialUpdate resource to update db values
                 document.getElementById("submitInput").setAttribute("formaction","/webapi/person/"+entryId+"/update");
 
                
-                console.log(entryId);
                 
                            //create url
             const endpoint = "/webapi/person/"+entryId+"/get";
-//            document.getElementById("updateForm").setAttribute("action", "/webapi/person/"+entryId+"/update_");
+
             //perform a get request
             const wesPromise = fetch(endpoint);
             
