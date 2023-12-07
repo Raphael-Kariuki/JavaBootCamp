@@ -235,6 +235,52 @@ public class MyResource {
         response = (patientdetails == null) ? Response.noContent().build() : Response.ok(patientdetails).build();
         return response;
     }
+
+    @Path("patientdetails/{mrn}/update")
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateByMRN(@PathParam("mrn") String mrn,
+            MultivaluedMap<String, String> formDataMap) {
+        Response response = null;
+        
+        //hashMap declaration
+        Map<String, String> formParameters = new HashMap<>();
+
+        //iterate the keys
+        Iterator<String> it = formDataMap.keySet().iterator();
+
+        while (it.hasNext()) {
+            String theKey = (String) it.next();
+            formParameters.put(theKey, formDataMap.getFirst(theKey));
+        }
+        System.out.println("" + formParameters);
+        Patientdetails updatePatientdetails = new Patientdetails();
+        updatePatientdetails.setSalutation(formParameters.get("_selectSalutation"));
+        updatePatientdetails.setFirsttime(formParameters.get("_firsttimeCheckbox"));
+        updatePatientdetails.setPfirstname(formParameters.get("_pFirstName"));
+        updatePatientdetails.setPmiddlname(formParameters.get("_pMiddleName"));
+        updatePatientdetails.setPlastname(formParameters.get("_pLastName"));
+        updatePatientdetails.setPdob(formParameters.get("_pdob"));
+        updatePatientdetails.setPphonenumber(formParameters.get("_pphoneNumber"));
+        updatePatientdetails.setPcountry(formParameters.get("_pcountrySelect"));
+        updatePatientdetails.setPcounty(formParameters.get("_pcountySelect"));
+        updatePatientdetails.setNokfirstname(formParameters.get("_NOKFirstName"));
+        updatePatientdetails.setNokmiddlename(formParameters.get("_NOKMiddleName"));
+        updatePatientdetails.setNoklastname(formParameters.get("_NOKLastName"));
+        updatePatientdetails.setNokdob(formParameters.get("_NOKdob"));
+        updatePatientdetails.setNokphonenumber(formParameters.get("_NOKphoneNumber"));
+        updatePatientdetails.setNokcountry(formParameters.get("_NOKcountrySelect"));
+        updatePatientdetails.setNokcounty(formParameters.get("_NOKcountySelect"));
+        
+        String status = personService.specialUpdatePatientDetailsByMRN(updatePatientdetails, mrn);
+        System.out.println("" + status);
+        
+        response = "1".equals(status) ? Response.ok(status).build() : Response.notModified(status).build();
+        
+        return response;
+        
+    }
 //    @Path("{id}/update")
 //    @PUT
 //    @Consumes(MediaType.APPLICATION_JSON)
