@@ -173,6 +173,22 @@ public class PersonService {
         }
        return patientDataFromDb;
     }
+    public String deletePatientDetailsByMRN(String mrn){
+    
+        String deleteQuery = "delete from public.patientdetails where mrn =  ?";
+        PreparedStatement preparedStatement = null;
+        String status = null;
+        
+        try {
+            preparedStatement = conn.prepareStatement(deleteQuery);
+            preparedStatement.setString(1, mrn);
+            
+            status = String.valueOf(preparedStatement.executeUpdate());
+        } catch (SQLException e) {
+            status = e.getMessage();
+        }
+        return status;
+    }
     public PersonModel getPersonById(int id) throws SQLException{
 
         String selectQuery = "select * from person where entryid = ?";
