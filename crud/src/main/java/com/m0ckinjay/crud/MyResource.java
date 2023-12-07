@@ -19,6 +19,7 @@ import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,10 +27,12 @@ import java.util.Map;
  */
 @Path("person")
 public class MyResource {
+
     PersonService personService = new PersonService();
+
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * Method handling HTTP GET requests. The returned object will be sent to
+     * the client as "text/plain" media type.
      *
      * @return String that will be returned as a text/plain response.
      */
@@ -38,57 +41,56 @@ public class MyResource {
     public String getIt() {
         return "Got it!";
     }
-    
+
     @Path("new")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createPersonEntry(PersonModel person){
+    public Response createPersonEntry(PersonModel person) {
         return Response.ok(personService.insertPerson(person)).build();
     }
 
-    
     @Path("all/get")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPersons() throws SQLException{
+    public Response getAllPersons() throws SQLException {
         return Response.ok(personService.getallPerson()).build();
     }
-    
+
     @Path("{id}/get")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPersons(@PathParam("id") int id) throws SQLException{
+    public Response getAllPersons(@PathParam("id") int id) throws SQLException {
         return Response.ok(personService.getPersonById(id)).build();
     }
-    
+
     @Path("{id}/delete")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePersonById(@PathParam("id") int id){
+    public Response deletePersonById(@PathParam("id") int id) {
         return Response.ok(personService.deletePersonById(id)).build();
     }
-    
+
     @Path("{id}/update")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePersonById(@PathParam("id") int id, MultivaluedMap<String, String> formDataMap) throws URISyntaxException{
-          /*
+    public Response updatePersonById(@PathParam("id") int id,
+            MultivaluedMap<String, String> formDataMap) throws URISyntaxException {
+        /*
         By default a multiValued hashMap values are list objects containing the correspondind form data items/values.
         When fed to a response directly , the json is not nicely formated
         (key, value(key, value)) insted of (key, value) - soln.Iterate and put in hashMap
-        */
+         */
         //hashMap declaration
-        Map<String,String> formParameters = new HashMap<>();
+        Map<String, String> formParameters = new HashMap<>();
 
         //iterate the keys
         Iterator<String> it = formDataMap.keySet().iterator();
 
-
-        while(it.hasNext()){
-           String theKey = (String)it.next();
-           formParameters.put(theKey,formDataMap.getFirst(theKey));
+        while (it.hasNext()) {
+            String theKey = (String) it.next();
+            formParameters.put(theKey, formDataMap.getFirst(theKey));
         }
         PersonModel updatePersonModel = new PersonModel();
         updatePersonModel.setFirstname(formParameters.get("firstName"));
@@ -99,31 +101,32 @@ public class MyResource {
         Response response = null;
         if (responseInt == 1) {
             response = Response.temporaryRedirect(URI.create("/")).build();
-        }else{
-        response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
+        } else {
+            response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
         }
         return response;
     }
+
     @Path("new/register")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response registerSystemUser(MultivaluedMap<String, String> formDataMap) throws URISyntaxException{
-          /*
+    public Response registerSystemUser(
+            MultivaluedMap<String, String> formDataMap) throws URISyntaxException {
+        /*
         By default a multiValued hashMap values are list objects containing the correspondind form data items/values.
         When fed to a response directly , the json is not nicely formated
         (key, value(key, value)) insted of (key, value) - soln.Iterate and put in hashMap
-        */
+         */
         //hashMap declaration
-        Map<String,String> formParameters = new HashMap<>();
+        Map<String, String> formParameters = new HashMap<>();
 
         //iterate the keys
         Iterator<String> it = formDataMap.keySet().iterator();
 
-
-        while(it.hasNext()){
-           String theKey = (String)it.next();
-           formParameters.put(theKey,formDataMap.getFirst(theKey));
+        while (it.hasNext()) {
+            String theKey = (String) it.next();
+            formParameters.put(theKey, formDataMap.getFirst(theKey));
         }
         //initialize user model
         Systemusers registerUser = new Systemusers();
@@ -133,50 +136,48 @@ public class MyResource {
         registerUser.setLastname(formParameters.get("lastname"));
         registerUser.setEmailaddress(formParameters.get("emailaddress"));
         registerUser.setPassword(formParameters.get("password"));
-        
+
         String responseInt = personService.registerSystemUser(registerUser);
         Response response = null;
         if (responseInt.equals("1")) {
             response = Response.temporaryRedirect(URI.create("/JSPs/login.jsp")).build();
-        }else{
-        response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
+        } else {
+            response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
         }
         return response;
     }
+
     @Path("new/patient/register")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response registerPatient(MultivaluedMap<String, String> formDataMap) throws URISyntaxException{
-          /*
+    public Response registerPatient(MultivaluedMap<String, String> formDataMap) throws URISyntaxException {
+        /*
         By default a multiValued hashMap values are list objects containing the correspondind form data items/values.
         When fed to a response directly , the json is not nicely formated
         (key, value(key, value)) insted of (key, value) - soln.Iterate and put in hashMap
-        */
+         */
         //hashMap declaration
-        Map<String,String> formParameters = new HashMap<>();
+        Map<String, String> formParameters = new HashMap<>();
 
         //iterate the keys
         Iterator<String> it = formDataMap.keySet().iterator();
 
-
-        while(it.hasNext()){
-           String theKey = (String)it.next();
-           formParameters.put(theKey,formDataMap.getFirst(theKey));
+        while (it.hasNext()) {
+            String theKey = (String) it.next();
+            formParameters.put(theKey, formDataMap.getFirst(theKey));
         }
-        System.out.println(""+ formDataMap.values());
-        System.out.println(""+ formDataMap.keySet());
-        System.out.println(""+ formParameters.values());
-        System.out.println(""+ formParameters.keySet());
-        System.out.println("" + formParameters.get("selectSalutation"));
+//        System.out.println(""+ formDataMap.values());
+//        System.out.println(""+ formDataMap.keySet());
+        System.out.println("" + formParameters.values());
+        System.out.println("" + formParameters.keySet());
         //initialize user model
         Patientdetails registerpatientDetails = new Patientdetails();
         //get form input
         SecureRandom secureRandom = new SecureRandom();
-        String mrnNumber = (formParameters.get("pFirstName")).charAt(0) + (formParameters.get("pMiddleName")).charAt(0) +(formParameters.get("pLastName")).charAt(0) + String.valueOf(secureRandom.nextLong(9999));
+        String mrnNumber = ((formParameters.get("pFirstName")).charAt(0) + "" + (formParameters.get("pMiddleName")).charAt(0) + "" + (formParameters.get("pLastName")).charAt(0)).toUpperCase() + String.valueOf(secureRandom.nextLong(9999));
         registerpatientDetails.setMrn(mrnNumber);
         registerpatientDetails.setSalutation(formParameters.get("selectSalutation"));
-        System.out.println("" + registerpatientDetails.getSalutation());
         registerpatientDetails.setFirsttime(formParameters.get("firsttimeCheckbox"));
         registerpatientDetails.setPfirstname(formParameters.get("pFirstName"));
         registerpatientDetails.setPmiddlname(formParameters.get("pMiddleName"));
@@ -192,16 +193,36 @@ public class MyResource {
         registerpatientDetails.setNokphonenumber(formParameters.get("NOKphoneNumber"));
         registerpatientDetails.setNokcountry(formParameters.get("NOKcountrySelect"));
         registerpatientDetails.setNokcounty(formParameters.get("NOKcountySelect"));
-        System.out.println("" + registerpatientDetails);
-    
+
         Response response = null;
         String responseInt = personService.insertPatientrecords(registerpatientDetails);
-//        if (responseInt.equals("1")) {
-//            response = Response.temporaryRedirect(URI.create("/index.jsp")).build();
-//        }else{
-//        response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
-//        }
-        return Response.ok(responseInt).build();
+        if (responseInt.equals("1")) {
+            response = Response.temporaryRedirect(URI.create("/index.jsp")).build();
+        }else{
+        response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
+        }
+        return response;
+    }
+    
+    @Path("patientdetails/all/get")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPatientDetails() throws SQLException{
+        Response response = null;
+        List<Patientdetails> patientDetailsDataSet = personService.getallPatientDetails();
+        if (patientDetailsDataSet.isEmpty()) {
+            response = Response.noContent().build();
+        }else{
+            response = Response.ok(patientDetailsDataSet).build();
+        }
+        return response;
+    }
+    @Path("patientdetails/{mrn}/delete")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletePatientdetailsByMRN(@PathParam("mrn") String mrn){
+        Response response = "1".equals(personService.deletePatientDetailsByMRN(mrn)) ? Response.ok().build() : Response.notModified().build();
+        return response;
     }
 //    @Path("{id}/update")
 //    @PUT
@@ -210,18 +231,22 @@ public class MyResource {
 //    public Response updatePersonById(@PathParam("id") int id, PersonModel newPersonModel){
 //        return Response.ok(personService.updatePersonById(newPersonModel, id)).build();
 //    }
+
     @Path("{id}/update_")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response specialUpdatePersonById(@PathParam("id") int id, PersonModel newPersonModel){
+    public Response specialUpdatePersonById(@PathParam("id") int id,
+            PersonModel newPersonModel) {
         return Response.ok(personService.specialUpdatePersonById(newPersonModel, id)).build();
     }
+
     @Path("{id}/patch")
     @PATCH
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response patchPersonById(@PathParam("id") int id, PersonModel newPersonModel){
+    public Response patchPersonById(@PathParam("id") int id,
+            PersonModel newPersonModel) {
         return Response.ok(personService.patchPersonById(newPersonModel, id)).build();
     }
 }
