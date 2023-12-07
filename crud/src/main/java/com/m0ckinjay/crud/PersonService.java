@@ -135,6 +135,44 @@ public class PersonService {
         }
        return dataFromDb;
     }
+    public List<Patientdetails> getallPatientDetails() throws SQLException{
+        List<Patientdetails> patientDataFromDb = new ArrayList<>();
+
+        String selectQuery = "select entryid,* from public.patientdetails limit 100";
+        PreparedStatement selectPreparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            selectPreparedStatement = conn.prepareStatement(selectQuery);
+            rs = selectPreparedStatement.executeQuery();
+            while (rs.next()) {
+                Patientdetails singlePatientdetails = new Patientdetails();
+                singlePatientdetails.setEntryid(rs.getString("entryid"));
+                singlePatientdetails.setMrn(rs.getString("mrn"));
+                singlePatientdetails.setSalutation(rs.getString("salutation"));
+                singlePatientdetails.setFirsttime(rs.getString("firsttime"));
+                singlePatientdetails.setPfirstname(rs.getString("pfirstname"));
+                singlePatientdetails.setPmiddlname(rs.getString("pmiddlename"));
+                singlePatientdetails.setPlastname(rs.getString("plastname"));
+                singlePatientdetails.setPdob(rs.getString("pdob"));
+                singlePatientdetails.setPphonenumber(rs.getString("pphonenumber"));
+                singlePatientdetails.setPcountry(rs.getString("pcountry"));
+                singlePatientdetails.setPcounty(rs.getString("pcounty"));
+                singlePatientdetails.setNokfirstname(rs.getString("nokfirstname"));
+                singlePatientdetails.setNokmiddlename(rs.getString("nokmiddlename"));
+                singlePatientdetails.setNoklastname(rs.getString("noklastname"));
+                singlePatientdetails.setNokdob(rs.getString("nokdob"));
+                singlePatientdetails.setNokphonenumber(rs.getString("nokphonenumber"));
+                singlePatientdetails.setNokcountry(rs.getString("nokcountry"));
+                singlePatientdetails.setNokcounty(rs.getString("nokcounty"));
+                patientDataFromDb.add(singlePatientdetails);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("" + e.getMessage());
+        }
+       return patientDataFromDb;
+    }
     public PersonModel getPersonById(int id) throws SQLException{
 
         String selectQuery = "select * from person where entryid = ?";
