@@ -197,9 +197,9 @@ public class MyResource {
         Response response = null;
         String responseInt = personService.insertPatientrecords(registerpatientDetails);
         if (responseInt.equals("1")) {
-            response = Response.temporaryRedirect(URI.create("/index.jsp")).build();
+            response = Response.temporaryRedirect(URI.create("/JSPs/patientDetailsView.jsp")).build();
         } else {
-            response = Response.status(Response.Status.NOT_IMPLEMENTED).location(new URI("/")).build();
+            response = Response.status(Response.Status.NOT_IMPLEMENTED).build();
         }
         return response;
     }
@@ -276,7 +276,7 @@ public class MyResource {
         String status = personService.specialUpdatePatientDetailsByMRN(updatePatientdetails, mrn);
         System.out.println("" + status);
         
-        response = "1".equals(status) ? Response.ok(status).build() : Response.notModified(status).build();
+        response = "1".equals(status) ? Response.temporaryRedirect(URI.create("/JSPs/patientDetailsView.jsp")).build() : Response.notModified(status).build();
         
         return response;
         
