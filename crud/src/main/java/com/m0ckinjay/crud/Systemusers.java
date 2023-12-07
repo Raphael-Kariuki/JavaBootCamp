@@ -20,10 +20,10 @@ import javax.persistence.TemporalType;
  *
  * @author mo
  */
-@Entity
-@Table(catalog = "crud", schema = "public")
-@NamedQueries({
-    @NamedQuery(name = "Systemusers.findAll", query = "SELECT s FROM Systemusers s")})
+//@Entity
+//@Table(catalog = "crud", schema = "public")
+//@NamedQueries({
+//    @NamedQuery(name = "Systemusers.findAll", query = "SELECT s FROM Systemusers s")})
 public class Systemusers implements Serializable {
 
     private static final long serialVersionUID = 1L;
