@@ -15,58 +15,66 @@
     </head>
     <body>
         <script>
-            const patientdetailsWebApiURI = "/webapi/person/patientdetails/all/get";
-            const patientDetailsDataPromise = fetch(patientdetailsWebApiURI);
-
-            patientDetailsDataPromise
+    
+   
+            fetch("/webapi/person/patientdetails/all/get")
                     .then((response) => response.json())
                     .then((data) => {
-                        if (data.length !== 0) {
-                            var table = "";
-
-                            for (var i = 0; i < data.length; i++) {
-                                var mrn = data[i].mrn;
-                                var patientFullNames = data[i].pfirstname + " " + data[i].pmiddlname + " " + data[i].plastname;
-                                var page = data[i].pdob;
-                                var pphonenumber = data[i].pphonenumber;
-
-                                table += "<tr>";
-                                table += "<td>" + mrn + " </td>";
-                                table += "<td>" + patientFullNames + " </td>";
-                                table += "<td>" + page + " </td>";
-                                table += "<td>" + pphonenumber + " </td>";
-
-                                table += '<td><a href="#" id="viewpatientdetails" name="' + mrn + '" >View</a> |';
-                                table += ' <a href="#" id="deletePatientdetails" onclick=actualDeletion(\"' +mrn +'\")>Delete</a></td>';
-                                table += "</tr>";
-
-                            }
-                            document.getElementById("results").innerHTML = table;
-                        } else {
-                            document.getElementById("errorDisplay").innerHTML = '<p>No data found</p><input id="btnCreateEntry" type="button" value="Add entry">';
-                        }
-                    });
-
+                    console.log(data);
+                    if (data.length !== 0) {
+                    var table = "";
+                    for (var i = 0; i < data.length; i++) {
+                    var mrn = data[i].mrn;
+                    var patientFullNames = data[i].pfirstname + " " + data[i].pmiddlname + " " + data[i].plastname;
+                    var page = data[i].pdob;
+                    var pphonenumber = data[i].pphonenumber;
+                    table += "<tr>";
+                    table += "<td>" + mrn + " </td>";
+                    table += "<td>" + patientFullNames + " </td>";
+                    table += "<td>" + page + " </td>";
+                    table += "<td>" + pphonenumber + " </td>";
+                    table += '<td><a href="/JSPs/patientDetailsEdit.jsp" id="viewpatientdetails" name="' + mrn + '" onclick=getViewHrefValue(\"' + mrn + '\")>View</a> |';
+                    table += ' <a href="#" id="deletePatientdetails" onclick=actualDeletion(\"' + mrn + '\")>Delete</a></td>';
+                    table += "</tr>";
+                    }
+                    document.getElementById("results").innerHTML = table;
+                    } 
+                    })
+                    .catch(() =>  document.getElementById("errorDisplay").innerHTML = '<p>No data found</p>');
             class DeletePatientRecord {
-                async delete(url) {
-                    const response = await fetch(url,
-                            {
-                                method: 'DELETE',
-                                headers: {
-                                    'Content-type': 'application/json'
-                                }
-                            }
-                    );
-                }
+            async delete(url) {
+            const response = await fetch(url,
+            {
+            method: 'DELETE',
+                    headers: {
+                    'Content-type': 'application/json'
+                    }
+            }
+            );
+            }
             }
             function actualDeletion(mrn) {
-                const deleteES6Class = new DeletePatientRecord;
-
-                deleteES6Class.delete('/webapi/person/patientdetails/' + mrn + '/delete')
-                 //on success the dom is reloaded to repopulate the table with remaining records
-                        .then(() => window.location.reload())
-                        //on error log the error
-                        .catch(err => console.log(err));;
+            const deleteES6Class = new DeletePatientRecord;
+            deleteES6Class.delete('/webapi/person/patientdetails/' + mrn + '/delete')
+                    //on success the dom is reloaded to repopulate the table with remaining records
+                    .then(() => window.location.reload())
+                    //on error log the error
+                    .catch(err => console.log(err));
+            ;
+            }
+            //function that sets cookie based on values received
+            function setCookie(cookieName, cookieValue, expiryDate) {
+            var d = new Date();
+            d.setTime(d.getTime() + (expiryDate * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d;
+            document.cookie = cookieName + "=" + cookieValue + "; " + expires + "; path=/JSPs/patientDetailsEdit.jsp";
+            }
+            //function called when every individual view<a> tag, argument is supplied when tag is created dynamically  
+            function getViewHrefValue(mrnValue) {
+            setCookie("mrn", mrnValue);
+            }
+            function redirect(){
+                window.location.href = "/JSPs/patientDetails.jsp";
             }
         </script>
 
@@ -88,6 +96,7 @@
         </nav>
         <div class="container-fluid">
             <div id="errorDisplay"></div>
+            <input id="btnCreateEntry" type="button" value="Add entry" onclick="redirect()">
 
 
 
