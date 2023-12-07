@@ -54,15 +54,16 @@ public class PersonService {
 }
 
     public String insertPatientrecords(Patientdetails newPatient){
-        String insertSQLString = "insert into patientdetails( mrn,salutation,firsttime,pfirstname,pmiddlname,plastname,pdob,"
+        String insertSQLString = "insert into patientdetails( mrn,salutation,firsttime,pfirstname,pmiddlename,plastname,pdob,"
                 + "pphonenumber,pcountry,pcounty,  nokfirstname,  nokmiddlename,noklastname,  nokdob,  nokphonenumber,\n" +
 "             nokcountry,  nokcounty,  log_ts) values(?,?,?,?,?,?,CAST(? as date),?,?,?,?,?,?,CAST(? as date),?,?,?,DEFAULT)";
         String status = null;
+        System.out.println("" + newPatient.getFirsttime());
         try {
             PreparedStatement insertPreparedStatement = conn.prepareStatement(insertSQLString);
             insertPreparedStatement.setString(1, newPatient.getMrn());
             insertPreparedStatement.setString(2, newPatient.getSalutation());
-            insertPreparedStatement.setString(3, (("".equals(newPatient.getFirsttime())) ? "false" : "true"));
+            insertPreparedStatement.setString(3, (((newPatient.getFirsttime()) == null) ? "false" : "true"));
             insertPreparedStatement.setString(4, newPatient.getPfirstname());
             insertPreparedStatement.setString(5, newPatient.getPmiddlname());
             insertPreparedStatement.setString(6, newPatient.getPlastname());
@@ -107,6 +108,8 @@ public class PersonService {
 
     }catch(SQLException e){
             status = e.getMessage();
+                        System.out.println("" + status);
+
     }
         return status;
 }
