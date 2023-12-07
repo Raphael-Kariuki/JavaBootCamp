@@ -213,7 +213,7 @@ public class PersonService {
                 singlePatientdetails.setPphonenumber(resultSet.getString("pphonenumber"));
                 singlePatientdetails.setPcountry(resultSet.getString("pcountry"));
                 singlePatientdetails.setPcounty(resultSet.getString("pcounty"));
-                singlePatientdetails.setNokfirstname(resultSet.getString("nokfiresultSettname"));
+                singlePatientdetails.setNokfirstname(resultSet.getString("nokfirstname"));
                 singlePatientdetails.setNokmiddlename(resultSet.getString("nokmiddlename"));
                 singlePatientdetails.setNoklastname(resultSet.getString("noklastname"));
                 singlePatientdetails.setNokdob(resultSet.getString("nokdob"));
