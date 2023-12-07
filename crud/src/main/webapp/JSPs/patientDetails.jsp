@@ -136,7 +136,7 @@
                                 <label class="form-check-label " for="similarContacts">
                                     Same as primary contacts
                                 </label>
-                                <input class="form-check-input border border-1 border-dark" type="checkbox" value="" id="similarContacts">
+                                <input class="form-check-input border border-1 border-dark" type="checkbox" value="true" name="similarContacts" id="similarContacts">
 
                             </div>
                             <label class="form-check-label" for="NOKphoneNumber">Phone Number<b class="text-danger text-bold">*</b></label>
