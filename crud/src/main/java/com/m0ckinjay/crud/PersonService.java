@@ -189,6 +189,45 @@ public class PersonService {
         }
         return status;
     }
+    public Patientdetails getPatientDetailsByMRN(String mrn){
+        String getQuery = "select entryid,* from public.patientdetails where mrn = ?";
+        PreparedStatement preparedStatement = null;
+        String status = null;
+        ResultSet resultSet = null;
+        Patientdetails singlePatientdetails = new Patientdetails();
+        try {
+            preparedStatement = conn.prepareStatement(getQuery);
+            preparedStatement.setString(1, mrn);
+            resultSet = preparedStatement.executeQuery();
+            
+            
+            while (resultSet.next()) {
+                singlePatientdetails.setEntryid(Integer.parseInt(resultSet.getString("entryid")));
+                singlePatientdetails.setMrn(resultSet.getString("mrn"));
+                singlePatientdetails.setSalutation(resultSet.getString("salutation"));
+                singlePatientdetails.setFirsttime(resultSet.getString("firsttime"));
+                singlePatientdetails.setPfirstname(resultSet.getString("pfirstname"));
+                singlePatientdetails.setPmiddlname(resultSet.getString("pmiddlename"));
+                singlePatientdetails.setPlastname(resultSet.getString("plastname"));
+                singlePatientdetails.setPdob(resultSet.getString("pdob"));
+                singlePatientdetails.setPphonenumber(resultSet.getString("pphonenumber"));
+                singlePatientdetails.setPcountry(resultSet.getString("pcountry"));
+                singlePatientdetails.setPcounty(resultSet.getString("pcounty"));
+                singlePatientdetails.setNokfirstname(resultSet.getString("nokfiresultSettname"));
+                singlePatientdetails.setNokmiddlename(resultSet.getString("nokmiddlename"));
+                singlePatientdetails.setNoklastname(resultSet.getString("noklastname"));
+                singlePatientdetails.setNokdob(resultSet.getString("nokdob"));
+                singlePatientdetails.setNokphonenumber(resultSet.getString("nokphonenumber"));
+                singlePatientdetails.setNokcountry(resultSet.getString("nokcountry"));
+                singlePatientdetails.setNokcounty(resultSet.getString("nokcounty"));
+                
+            }
+            status = "1";
+        } catch (SQLException e) {
+            status = e.getMessage();
+        }
+    return singlePatientdetails;
+    }
     public PersonModel getPersonById(int id) throws SQLException{
 
         String selectQuery = "select * from person where entryid = ?";
