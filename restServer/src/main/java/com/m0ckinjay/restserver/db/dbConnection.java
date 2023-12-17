@@ -9,6 +9,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,12 +43,15 @@ public class dbConnection {
     }
 
 
-    public  String checkLogin(String userName) {
+    public  Map<String, String> checkLogin(String userName) {
         
-        String selectQuery = "SELECT password FROM \"public\".systemusers where username = ? LIMIT 1";
+        String selectQuery = "SELECT entryid, password FROM \"public\".systemusers where username = ? LIMIT 1";
         String actualPassword = null;
+        Integer actualEntryId = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
+        Map<String, String> loginUserDetails = new HashMap<>();
+//        users loginUser = new users();
         try{
             preparedStatement = conn.prepareStatement(selectQuery);
             preparedStatement.setString(1, userName);
@@ -54,14 +60,21 @@ public class dbConnection {
             while (rs.next()) {
                 if (rs.getString("password") != null) {
                     actualPassword = rs.getString("password");
+//                    loginUser.setPassword(actualPassword);
+                    actualEntryId = rs.getInt("entryid");
+//                    loginUser.setEntryid(actualEntryId);
+//                    loginUser.setUsername(userName);
+                    loginUserDetails.put("username", userName);
+                    loginUserDetails.put("password", actualPassword);
+                    loginUserDetails.put("entryid", String.valueOf(actualEntryId));
 
                 }
             }
         }catch(SQLException e){
             Logger.getAnonymousLogger().log(Level.INFO, "Error:  {0} ", new Object[]{e.getMessage()});
-            actualPassword = e.getMessage();
+            loginUserDetails.put("error", e.getMessage());
         }
-        return actualPassword;
+        return loginUserDetails;
     }
 
 }
