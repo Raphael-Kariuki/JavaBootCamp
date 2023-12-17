@@ -1,12 +1,14 @@
 package com.m0ckinjay.restserver;
 
 import com.m0ckinjay.restserver.db.dbConnection;
+import com.m0ckinjay.restserver.db.users;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.Map;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -32,9 +34,15 @@ public class MyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response authenticateLogin(@PathParam("username") String userName){
         Response response = null;
-        String password = dbConnection.checkLogin(userName);
-        if (password != null && password.length() > 0) {
-            response = Response.ok(password).build();
+        Map<String, String> loginUserDetails = dbConnection.checkLogin(userName);
+        users systemUser = new users();
+        if (loginUserDetails.containsKey("password") && loginUserDetails.containsKey("entryid") && loginUserDetails.containsKey("username")) {
+                    systemUser.setPassword(loginUserDetails.get("password"));
+                    systemUser.setUsername(loginUserDetails.get("username"));
+                    systemUser.setEntryid(Integer.valueOf(loginUserDetails.get("entryid")));
+                    
+
+            response = Response.ok(systemUser).build();
         }else{
             response = Response.noContent().build();
         }
