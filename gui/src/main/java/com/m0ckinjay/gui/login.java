@@ -4,8 +4,17 @@
  */
 package com.m0ckinjay.gui;
 
+import com.m0ckinjay.gui.db.users;
+import jakarta.validation.constraints.NotNull;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.glassfish.jersey.server.JSONP;
 
 /**
  *
@@ -13,11 +22,16 @@ import java.util.logging.Logger;
  */
 public class login extends javax.swing.JFrame {
 
+    Client client = null;
+
     /**
      * Creates new form login
      */
     public login() {
         initComponents();
+    
+        client = ClientBuilder.newClient();
+
     }
 
     /**
@@ -143,12 +157,46 @@ public class login extends javax.swing.JFrame {
 
     private void loginUser(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginUser
         // TODO add your handling code here:
+        //get field values from gui
+        @NotNull
+                //TODO: check on integrity annotations eg @NotNull
         String userName = jTextField1.getText().trim();
+        @NotNull
         String password = jPasswordField1.getText().trim();
         
-//        Logger.getAnonymousLogger().log(Level.INFO, "Hello {0} your passcode is {1}", new Object[]{userName, password});
-        displayLabel.setText("Hello " +userName + " your passcode is "+password);
-        
+        String restLoginURI = "http://localhost:8081/server/webapi/person/{username}/login";
+        //make request and assign to response
+        Response response = client.target(restLoginURI)
+                //setup the pathParam
+                .resolveTemplate("username", userName)
+                .request(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .get();
+        //200 is returned when user found
+        if (response.getStatus() == 200) {
+//            Logger.getAnonymousLogger().log(Level.INFO, response.readEntity(String.class));
+                //parse response inform of of the user class
+               users loginUser = response.readEntity(users.class);
+//               System.out.println("Welcome " + loginUser.getUsername() + " your password is " + loginUser.getPassword());
+
+               if (loginUser.getPassword().equals(password)) {
+                   displayLabel.setBackground(Color.GREEN);
+                   displayLabel.setForeground(Color.BLACK);
+                displayLabel.setText("Correct credentials");
+            }else{
+                   displayLabel.setBackground(Color.BLACK);
+                   displayLabel.setForeground(Color.RED);
+                displayLabel.setText("incorrect password");
+               }
+               
+                
+               //204 is returned whenuser isn't found
+        } else if (response.getStatus() == 204) {
+             displayLabel.setBackground(Color.BLACK);
+                   displayLabel.setForeground(Color.RED);
+                displayLabel.setText("No such user found");
+
+        }
     }//GEN-LAST:event_loginUser
 
     /**
