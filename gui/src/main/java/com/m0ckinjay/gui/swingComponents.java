@@ -4,6 +4,7 @@
  */
 package com.m0ckinjay.gui;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -30,6 +31,9 @@ public class swingComponents  extends JFrame{
     private JCheckBox deuxCheckBox;
     private JCheckBox troisCheckBox;
     
+    private JPanel comboPanel;
+    private JComboBox jComboBox;
+    
     public swingComponents(){
         initComponents();
     }
@@ -53,11 +57,17 @@ public class swingComponents  extends JFrame{
         
         displaTextField.setEditable(false);
         
+        comboPanel = new JPanel();
+        comboPanel.setSize(40, 40);
+        
+        jComboBox = new JComboBox(new String[]{"Black", "Blue","Green"});
+        jComboBox.setMaximumRowCount(2);
+        
         //set default action on close window button click
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //set title - could also be set with super("title") - though with super it has to be the first call in the constructor
         setTitle("Swing components");
-        setLayout(new GridLayout(2,1));
+        setLayout(new GridLayout(3,1));
         
         final int WIDTH = 500;
         final int HEIGHT = 500;
@@ -83,10 +93,13 @@ public class swingComponents  extends JFrame{
         checksPanel.add(deuxCheckBox);
         checksPanel.add(troisCheckBox);
         
+        comboPanel.add(jComboBox);
+        
         
         //add panel to frame
         add(mainPanel);
         add(checksPanel);
+        add(comboPanel);
         
         //inner class that implements the ItemListener has to be referenced in the main class so that it can access top-level class variables and methods
         EventHandler eventHandler = new EventHandler();
@@ -101,6 +114,9 @@ public class swingComponents  extends JFrame{
         deuxCheckBox.addItemListener(checkBoxEventHandler);
         troisCheckBox.addItemListener(checkBoxEventHandler);
         
+        
+        ComboEventListener comboEventListener = new ComboEventListener();
+        jComboBox.addItemListener(comboEventListener);
     }
     
     private class EventHandler implements ItemListener{
@@ -132,6 +148,22 @@ public class swingComponents  extends JFrame{
                 displaTextField.setFont(new Font(Font.SERIF,Font.ITALIC, 14));
             }else if (troisCheckBox.isSelected()) {
                 displaTextField.setFont(new Font(Font.SERIF,Font.BOLD + Font.ITALIC, 14));
+            }
+        }
+    }
+    
+    private class ComboEventListener implements ItemListener{
+
+        @Override
+        public void itemStateChanged(ItemEvent ie) {
+            if (ie.getStateChange() == ItemEvent.SELECTED) {
+                if (jComboBox.getSelectedItem()== "Blue") {
+                    comboPanel.setBackground(Color.BLUE);
+                }else if (jComboBox.getSelectedItem() == "Black") {
+                    comboPanel.setBackground(Color.BLACK);
+                }else if (jComboBox.getSelectedItem() == "Green") {
+                    comboPanel.setBackground(Color.GREEN);
+                }
             }
         }
     }
