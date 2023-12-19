@@ -14,6 +14,7 @@ import jakarta.ws.rs.core.Response;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.glassfish.jersey.server.JSONP;
 
 /**
@@ -28,8 +29,10 @@ public class login extends javax.swing.JFrame {
      * Creates new form login
      */
     public login() {
+        super("Login page");
+
         initComponents();
-    
+
         client = ClientBuilder.newClient();
 
     }
@@ -156,47 +159,73 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginUser(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginUser
-        // TODO add your handling code here:
         //get field values from gui
         @NotNull
-                //TODO: check on integrity annotations eg @NotNull
+        //TODO: check on integrity annotations eg @NotNull
         String userName = jTextField1.getText().trim();
         @NotNull
-        String password = jPasswordField1.getText().trim();
-        
-        String restLoginURI = "http://localhost:8081/server/webapi/person/{username}/login";
-        //make request and assign to response
-        Response response = client.target(restLoginURI)
-                //setup the pathParam
-                .resolveTemplate("username", userName)
-                .request(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .get();
-        //200 is returned when user found
-        if (response.getStatus() == 200) {
+        //change method of getting password from getText() to getPassword()
+        char[] password = jPasswordField1.getPassword();
+
+        //added null checks before any 
+        if (userName.isEmpty()) {
+            displayLabel.setBackground(Color.BLACK);
+            displayLabel.setForeground(Color.RED);
+            displayLabel.setText("Username can't be blank");
+        } else if (password.length == 0) {
+            displayLabel.setBackground(Color.BLACK);
+            displayLabel.setForeground(Color.RED);
+            displayLabel.setText("Password can't be blank");
+        } else if (!userName.isEmpty() && password.length > 0) {
+
+            String restLoginURI = "http://localhost:8081/server/webapi/person/{username}/login";
+            //make request and assign to response
+            Response response = client.target(restLoginURI)
+                    //setup the pathParam
+                    .resolveTemplate("username", userName)
+                    .request(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .get();
+            //200 is returned when user found
+            if (response.getStatus() == 200) {
 //            Logger.getAnonymousLogger().log(Level.INFO, response.readEntity(String.class));
                 //parse response inform of of the user class
-               users loginUser = response.readEntity(users.class);
+                users loginUser = response.readEntity(users.class);
 //               System.out.println("Welcome " + loginUser.getUsername() + " your password is " + loginUser.getPassword());
 
-               if (loginUser.getPassword().equals(password)) {
-                   displayLabel.setBackground(Color.GREEN);
-                   displayLabel.setForeground(Color.BLACK);
-                displayLabel.setText("Correct credentials");
-            }else{
-                   displayLabel.setBackground(Color.BLACK);
-                   displayLabel.setForeground(Color.RED);
-                displayLabel.setText("incorrect password");
-               }
-               
-                
-               //204 is returned whenuser isn't found
-        } else if (response.getStatus() == 204) {
-             displayLabel.setBackground(Color.BLACK);
-                   displayLabel.setForeground(Color.RED);
+                String passcode = "";
+                for (char c : password) {
+                    passcode += c;
+                }
+                if (loginUser.getPassword().equals(passcode)) {
+                    displayLabel.setBackground(Color.GREEN);
+                    displayLabel.setForeground(Color.BLACK);
+                    displayLabel.setText("Correct credentials");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+//                   login login = new login();
+//                   login.setRootPane();
+//                   Home home = new Home();
+//                   home.show();
+                } else {
+                    displayLabel.setBackground(Color.BLACK);
+                    displayLabel.setForeground(Color.RED);
+                    displayLabel.setText("incorrect password");
+                }
+
+                //204 is returned whenuser isn't found
+            } else if (response.getStatus() == 204) {
+                displayLabel.setBackground(Color.BLACK);
+                displayLabel.setForeground(Color.RED);
                 displayLabel.setText("No such user found");
 
+            }
         }
+
+
     }//GEN-LAST:event_loginUser
 
     /**
