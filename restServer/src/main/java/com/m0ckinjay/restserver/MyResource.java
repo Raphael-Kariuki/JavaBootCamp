@@ -29,7 +29,7 @@ public class MyResource {
         return "Got it!";
     }
     
-    @Path("login/{username}")
+    @Path("{username}/login")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response authenticateLogin(@PathParam("username") String userName){
@@ -39,7 +39,7 @@ public class MyResource {
         if (loginUserDetails.containsKey("password") && loginUserDetails.containsKey("entryid") && loginUserDetails.containsKey("username")) {
                     systemUser.setPassword(loginUserDetails.get("password"));
                     systemUser.setUsername(loginUserDetails.get("username"));
-                    systemUser.setEntryid(Integer.valueOf(loginUserDetails.get("entryid")));
+                    systemUser.setEntryid(Integer.parseInt(loginUserDetails.get("entryid")));
                     
 
             response = Response.ok(systemUser).build();
@@ -48,5 +48,21 @@ public class MyResource {
         }
         
         return response;
+    }
+    
+    @Path("all")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsernames(){
+    Response response = null;
+    
+    String[] userNames = dbConnection.getUserNames();
+    
+        if (userNames != null && userNames.length > 0) {
+            response = Response.ok(userNames).build();
+        }else{
+            response = Response.noContent().build();
+        }
+    return response;
     }
 }
