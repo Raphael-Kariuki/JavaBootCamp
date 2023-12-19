@@ -4,6 +4,10 @@
  */
 package com.m0ckinjay.gui;
 
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.MediaType;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -60,8 +64,8 @@ public class swingComponents  extends JFrame{
         comboPanel = new JPanel();
         comboPanel.setSize(40, 40);
         
-        jComboBox = new JComboBox(new String[]{"Black", "Blue","Green"});
-        jComboBox.setMaximumRowCount(2);
+        jComboBox = new JComboBox(getUserNamesForComboBox());
+        jComboBox.setMaximumRowCount(5);
         
         //set default action on close window button click
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -170,6 +174,19 @@ public class swingComponents  extends JFrame{
     public static void main(String[] args) {
         //frame has to be set as visible otherwise it won't be displayed.
         new swingComponents().setVisible(true);
+    }
+    private String[] getUserNamesForComboBox(){
+    
+        String[] usernames = new String[]{};
+    
+        Client client = ClientBuilder.newClient();
+        String apiURI = "http://localhost:8081/server/webapi/person/all";
+        WebTarget apiResource = client.target(apiURI);
+        
+        usernames = apiResource.request(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(String[].class);
+        return usernames;
     }
     
     
