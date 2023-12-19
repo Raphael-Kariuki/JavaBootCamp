@@ -12,6 +12,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
@@ -42,6 +44,7 @@ public class swingComponents  extends JFrame{
     
     private JPanel jlistPanel;
     private JList<String> jList;
+    private JButton jListJButton;
     
     
     public swingComponents(){
@@ -93,6 +96,7 @@ public class swingComponents  extends JFrame{
         jList = new JList<>(getUserNamesForComboBox());
         jList.setVisibleRowCount(5);
         jList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jListJButton = new JButton("View selected items");
         
    
         
@@ -114,6 +118,7 @@ public class swingComponents  extends JFrame{
         comboPanel.add(jComboBox);
         
         jlistPanel.add(jList);
+        jlistPanel.add(jListJButton);
         
         
         
@@ -124,7 +129,7 @@ public class swingComponents  extends JFrame{
         add(jlistPanel);
         
         //inner class that implements the ItemListener has to be referenced in the main class so that it can access top-level class variables and methods
-        EventHandler eventHandler = new EventHandler();
+        RBtnEventHandler eventHandler = new RBtnEventHandler();
         
         //associate event event handler to all rbuttons
         unoRbtn.addItemListener(eventHandler);
@@ -140,11 +145,16 @@ public class swingComponents  extends JFrame{
         ComboEventListener comboEventListener = new ComboEventListener();
         jComboBox.addItemListener(comboEventListener);
         
-        JlistListSelectionListener jlistListSelectionListener = new JlistListSelectionListener();
-        jList.addListSelectionListener(jlistListSelectionListener);
+//        JlistListSelectionListener jlistListSelectionListener = new JlistListSelectionListener();
+//        jList.addListSelectionListener(jlistListSelectionListener);
+
+        jListJButton.addActionListener((ActionEvent ae) -> {
+            String[] selectedItems = jList.getSelectedValuesList().toArray(new String[0]);
+            JOptionPane.showMessageDialog(null, selectedItems, "Selected items display", JOptionPane.INFORMATION_MESSAGE);
+        });
     }
     
-    private class EventHandler implements ItemListener{
+    private class RBtnEventHandler implements ItemListener{
 
         @Override
         public void itemStateChanged(ItemEvent ie) {
