@@ -4,11 +4,15 @@
  */
 package com.m0ckinjay.restserver.db;
 
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +46,8 @@ public class dbConnection {
 
     }
 
+    public Map<String, String> checkLogin(String userName) {
 
-    public  Map<String, String> checkLogin(String userName) {
-        
         String selectQuery = "SELECT entryid, password FROM \"public\".systemusers where username = ? LIMIT 1";
         String actualPassword = null;
         Integer actualEntryId = null;
@@ -52,11 +55,11 @@ public class dbConnection {
         ResultSet rs = null;
         Map<String, String> loginUserDetails = new HashMap<>();
 //        users loginUser = new users();
-        try{
+        try {
             preparedStatement = conn.prepareStatement(selectQuery);
             preparedStatement.setString(1, userName);
             rs = preparedStatement.executeQuery();
-            
+
             while (rs.next()) {
                 if (rs.getString("password") != null) {
                     actualPassword = rs.getString("password");
@@ -70,11 +73,33 @@ public class dbConnection {
 
                 }
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             Logger.getAnonymousLogger().log(Level.INFO, "Error:  {0} ", new Object[]{e.getMessage()});
             loginUserDetails.put("error", e.getMessage());
         }
         return loginUserDetails;
+    }
+
+    public String[] getUserNames() {
+        List<String> userNamesList = new ArrayList<>();
+
+        String selectStatement = "select username from \"public\".systemusers";
+        ResultSet rs = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = conn.prepareStatement(selectStatement);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                userNamesList.add(rs.getString("username"));
+            }
+        } catch (SQLException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, "Error getting usernames {0}", e.getMessage());
+        }
+
+        return userNamesList.toArray(new String[0]);
+
     }
 
 }
