@@ -15,6 +15,8 @@ import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -38,11 +40,31 @@ public class swingComponents  extends JFrame{
     private JPanel comboPanel;
     private JComboBox jComboBox;
     
+    private JPanel jlistPanel;
+    private JList<String> jList;
+    
+    
     public swingComponents(){
         initComponents();
     }
     
     private void initComponents(){
+        //set default action on close window button click
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //set title - could also be set with super("title") - though with super it has to be the first call in the constructor
+        setTitle("Swing components");
+        setLayout(new GridLayout(4, 1));
+
+        final int WIDTH = 500;
+        final int HEIGHT = 600;
+
+        //without setting size, window isn't rendered in a visible/usable manner
+        setSize(WIDTH, HEIGHT);
+
+        //set location to somewhere in the middle of the screen
+        setLocation(500, 100);
+        
+        
         
         //initialize gui components
         mainPanel = new JPanel();
@@ -67,20 +89,12 @@ public class swingComponents  extends JFrame{
         jComboBox = new JComboBox(getUserNamesForComboBox());
         jComboBox.setMaximumRowCount(5);
         
-        //set default action on close window button click
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //set title - could also be set with super("title") - though with super it has to be the first call in the constructor
-        setTitle("Swing components");
-        setLayout(new GridLayout(3,1));
+        jlistPanel = new JPanel();
+        jList = new JList<>(getUserNamesForComboBox());
+        jList.setVisibleRowCount(5);
+        jList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         
-        final int WIDTH = 500;
-        final int HEIGHT = 500;
-        
-        //without setting size, window isn't rendered in a visible/usable manner
-        setSize(WIDTH, HEIGHT);
-        
-        //set location to somewhere in the middle of the screen
-        setLocation(500,200);
+   
         
         //add individual rbuttons to a button group to create a relation
         rBtnGroup.add(unoRbtn);
@@ -99,11 +113,15 @@ public class swingComponents  extends JFrame{
         
         comboPanel.add(jComboBox);
         
+        jlistPanel.add(jList);
+        
+        
         
         //add panel to frame
         add(mainPanel);
         add(checksPanel);
         add(comboPanel);
+        add(jlistPanel);
         
         //inner class that implements the ItemListener has to be referenced in the main class so that it can access top-level class variables and methods
         EventHandler eventHandler = new EventHandler();
@@ -121,6 +139,9 @@ public class swingComponents  extends JFrame{
         
         ComboEventListener comboEventListener = new ComboEventListener();
         jComboBox.addItemListener(comboEventListener);
+        
+        JlistListSelectionListener jlistListSelectionListener = new JlistListSelectionListener();
+        jList.addListSelectionListener(jlistListSelectionListener);
     }
     
     private class EventHandler implements ItemListener{
@@ -170,6 +191,15 @@ public class swingComponents  extends JFrame{
                 }
             }
         }
+    }
+    
+    private class JlistListSelectionListener implements ListSelectionListener{
+
+        @Override
+        public void valueChanged(ListSelectionEvent lse) {
+            JOptionPane.showMessageDialog(null, jList.getSelectedValue(), "Selected value", JOptionPane.PLAIN_MESSAGE);
+        }
+    
     }
     public static void main(String[] args) {
         //frame has to be set as visible otherwise it won't be displayed.
