@@ -16,15 +16,15 @@
             <div>
                 <fieldset>
                     <label for="newPtCard">
-                        <input id="newPtCard" type="radio" value="newPtCard" name="newPtCard"/>
+                        <input id="newPtCard" type="radio" value="newPtCard" name="PtCard"/>
                         Create new patient file
                     </label>
                     <label for="oldPtCard">
-                        <input id="oldPtCard" type="radio" value="oldPtCard" name="oldPtCard"/>
+                        <input id="oldPtCard" type="radio" value="oldPtCard" name="PtCard"/>
                         Create old patient file
                     </label>
                     <label for="revist">
-                        <input id="revist" type="radio" value="revist" name="revist"/>
+                        <input id="revist" type="radio" value="revist" name="PtCard"/>
                         Revisit
                     </label>
                     <label for="reprintFile">
@@ -60,7 +60,7 @@
                     </label> 
                     <label for="currVisitDate">   Current visit Date
                     </label> 
-                    <input id="currVisitDate" type="date"  name="currVisitDate"/>
+                    <input id="currVisitDate" type="date"  name="currVisitDate" readonly/>
                     <label for="todayVisitDate">   Appointment visit Date
                     </label> 
                     <input id="todayVisitDate" type="date"  name="todayVisitDate"/>
@@ -82,7 +82,7 @@
 
                     <label for="PayMode">     Payment Mode
                     </label>
-                    <select  id="PayMode" name="PayMode">
+                    <select  id="PayMode" name="PayMode" required>
                         <option value="">Select</option>
                         <option value="Cash">Cash</option>
                         <option value="Cheque">Cheque</option>
@@ -101,8 +101,8 @@
             </div>
             <div>
                 <fieldset>
-                    <a class="tablink" onclick="openPage('ptBioData', this, 'red')">Patient Bio Data</a>
-                    <a class="tablink" onclick="openPage('demographics', this, 'green')" id="defaultOpen">Demographic Info</a>
+                    <a class="tablink" onclick="openPage('ptBioData', this, 'red')" id="defaultOpen" >Patient Bio Data</a>
+                    <a class="tablink" onclick="openPage('demographics', this, 'green')" >Demographic Info</a>
                     <a class="tablink" onclick="openPage('ptInsuranceDetails', this, 'blue')">Insurance Details</a>
                     <a class="tablink" onclick="openPage('ptCreditDetails', this, 'orange')">Credit card details</a>
                     <a class="tablink" onclick="openPage('rta', this, 'orange')">RTA</a>
@@ -114,43 +114,248 @@
 
                     <div id="ptBioData" class="tabcontent">
                         <h3>Patient Bio Data</h3>
-                        
+                        <fieldset>
+                            <div>
+                                <label for="ptUrgency">     Patient Urgency
+                                </label>
+                                <select  id="ptUrgency" name="ptUrgency" required >
+                                    <option value="Normal">Normal</option>
+                                    <option value="Emergency">Emergency</option>
+
+                                </select>
+                            </div>
+                            <div>
+                                <label for="ptSurnameLastname">
+                                    Patient Surname/Lastname
+
+                                    <input id="ptSurnameLastname" type="text"  name="ptSurnameLastname"/>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="ptOthernames">
+                                    Other patient names
+
+                                    <input id="ptOthernames" type="text"  name="ptOthernames"/>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label for="specialtyClinic">    Specialty Clinic
+                                </label>
+                                <select  id="specialtyClinic" name="specialtyClinic" required >
+                                    <option value="Casualty">Casualty</option>
+                                    <option value="Clinics">Clinics</option>
+                                    <option value="Consultation">Consultation</option>
+                                    <option value="Dental">Dental</option>
+                                    <option value="Dopc">Dopc</option>
+                                    <option value="Ent">Ent</option>
+                                    <option value="Eye">Eye</option>
+
+                                </select>
+                            </div>
+                            <div>
+                                <label for="ptCSheetNo">
+                                    C-Sheet Number
+
+                                    <input id="ptCSheetNo" type="text"  name="ptCSheetNo"/>
+                                </label>
+                            </div>
+                            <span>
+                                <label for="ptGender">
+                                    Gender(Tick only one)                                </label>
+
+                                <span id="ptGender">
+
+                                    <label for="ptGenderM">
+                                        <input id="ptGenderM" type="radio"  name="ptGender"/>
+                                        Male     
+                                    </label>
+                                    <label for="ptGenderF">
+                                        <input id="ptGenderF" type="radio"  name="ptGender"/>
+                                        Female     
+                                    </label>
+                                </span>
+
+                            </span>
+                            <div>
+                                <label for="ptMaritalStatus">
+                                    Marital status                                </label>
+
+                                <span id="ptMaritalStatus">
+
+                                    <label for="ptMaritalStatusS">
+                                        <input id="ptMaritalStatusS" type="radio"  name="ptMaritalStatus"/>
+                                        Single     
+                                    </label>
+                                    <label for="ptMaritalStatusM">
+                                        <input id="ptMaritalStatusM" type="radio"  name="ptMaritalStatus"/>
+                                        Married     
+                                    </label>
+
+
+
+                                    <label for="ptMaritalStatusD">
+                                        <input id="ptMaritalStatusD" type="radio"  name="ptMaritalStatus"/>
+                                        Divorced     
+                                    </label>
+                                    <label for="ptMaritalStatusW">
+                                        <input id="ptMaritalStatusW" type="radio"  name="ptMaritalStatus"/>
+                                        Widowed     
+                                    </label>
+
+                                </span>
+
+                            </div>
+                            <div>
+                                <label for="ptAge">
+                                    Age   
+
+                                    <input id="ptAge" type="text"  name="ptAge" readonly/>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="ptDOB">
+                                    Date of Birth  
+
+                                    <input id="ptDOB" type="date"  name="ptDOB" required/>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="ptWithDisability">
+                                    Patient with disability 
+
+                                    <span id="ptWithDisability">
+                                        <select  id="ptDisabled" name="ptDisabled" required >
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+
+                                        </select>
+                                        <select  id="ptAuthority" name="ptAuthority" required >
+                                            <option value="Voluntary">Voluntary</option>
+                                            <option value="Involuntary">Involuntary</option>
+
+
+                                        </select>
+                                    </span>
+                                </label>
+                            </div>
+
+                        </fieldset>
+                        <fieldset>
+                            <div>
+                                <label for="ptIdPassportNo">
+                                    ID/Passport No.
+
+                                    <input id="ptIdPassportNo" type="text"  name="ptIdPassportNo"/>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="ptPhoneNo">
+                                    Phone No.
+
+                                    <input id="ptPhoneNo" type="text"  name="ptPhoneNo"/>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="ptNationality">Nationality</label>
+                                <select  id="ptAuthority" name="ptAuthority" required >
+                                    <option value="Kenya">Kenya</option>
+                                    <option value="Uganda">Uganda</option>
+
+
+                                </select>
+                            </div>
+                            <div>
+                                <label for="ptCounty">County</label>
+                                <select  id="ptCounty" name="ptCounty" required >
+                                    <option value="Meru">Meru</option>
+                                    <option value="Garissa">Garissa</option>
+
+
+                                </select>
+                            </div>
+                            <div>
+                                <label for="ptSubCounty">Sub County</label>
+                                <select  id="ptSubCounty" name="ptSubCounty" required >
+                                    <option value="Igoji">Igoji</option>
+
+
+                                </select>
+                            </div>
+                            <div>
+                                <label for="ptEmailAddr">
+                                    Email address
+
+                                    <input id="ptEmailAddr" type="email"  name="ptEmailAddr"/>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="ptPostalAddr">
+                                    Postal address
+
+                                    <input id="ptPostalAddr" type="text"  name="ptPostalAddr"/>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="ptHomeVillage">
+                                    Home Village
+
+                                    <input id="ptHomeVillage" type="text"  name="ptHomeVillage"/>
+                                </label>
+                            </div>
+                            <div>
+                                <span>
+                                    <label>NHIF registered</label>
+                                    <input id="ptNHIFRegistered" type="checkbox"  name="ptNHIFRegistered"/>
+                                    <input id="ptNHIFRegisteredChildren" type="text"  name="ptNHIFRegisteredChildren" placeholder="No of children"/>
+                                </span>
+                            </div>
+                            <div>
+                                <label for="ptNHIFClaimNo">
+                                    NHIF Claim Number
+
+                                    <input id="ptNHIFClaimNo" type="text"  name="ptNHIFClaimNo"/>
+                                </label>
+                            </div>
+                        </fieldset>
+
                     </div>
                     <div id="demographics" class="tabcontent">
                         <h3>Demographic Info</h3>
-                        
+
                     </div>
                     <div id="ptInsuranceDetails" class="tabcontent">
                         <h3>Insurance Details</h3>
-                        
+
                     </div>
                     <div id="ptCreditDetails" class="tabcontent">
                         <h3>Credit card details</h3>
-                        
+
                     </div>
                     <div id="rta" class="tabcontent">
                         <h3>RTA</h3>
-                        
+
                     </div>
                     <div id="ptDiagnosis" class="tabcontent">
                         <h3>Diagnosis</h3>
-                        
+
                     </div>
                     <div id="registedPts" class="tabcontent">
                         <h3>Report of registered patients</h3>
-                        
+
                     </div>
                     <div id="spatialData" class="tabcontent">
                         <h3>Spatial Info/GIS Map</h3>
-                        
+
                     </div>
                     <div id="ptPreviousVisits" class="tabcontent">
                         <h3>Previous visits</h3>
-                        
+
                     </div>
                     <div id="ptVitalsSigns" class="tabcontent">
                         <h3>Vital signs</h3>
-                        
+
                     </div>
 
 
@@ -169,7 +374,7 @@
                             elmnt.style.backgroundColor = color;
                         }
 
-                    // Get the element with id="defaultOpen" and click on it
+                        // Get the element with id="defaultOpen" and click on it
                         document.getElementById("defaultOpen").click();
                     </script>
                 </fieldset>
