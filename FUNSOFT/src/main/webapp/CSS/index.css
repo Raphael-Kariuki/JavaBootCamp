@@ -13,12 +13,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     font-size: 12px;
     
 }
+.ptDetailsSubContainer{
+        width: 30%;
+        display: inline-block;  
+}
+.ptDetailsSubContainer > fieldset{
+    border: 1px solid #999;
+}
+.tabcontent > fieldset{
+    width: 30%;
+    display: inline-block;
+    border: 1px solid #999;
+}
 fieldset{
-    padding: 1em 2em;
-    border: 1px solid #ccc;
+    padding: 1em;
+    border-top: 2px solid #ccc;
     border-bottom: none;
+    border-left: none;
+    border-right: none;
     border-radius: 6px;
-    min-width: 260px;
 }
 legend{
     padding: 0 .25em;
@@ -36,6 +49,9 @@ input[type="email"],input[type="text"], input[type="date"]{
     width: 15em;
     height: 1.25em;
     text-align: center;
+    background-color: #ccb;
+    border: 1px solid #000;
+    border-radius: 3px;
 }
 
 select{
@@ -46,7 +62,7 @@ input[type="radio"],input[type="checkbox"] {
     margin-left: 1.5em
 }
 .maritalStatus input[type="radio"] {
-    margin-left: 0.5em
+    margin-left: 0.1em
 }
 input[type="radio"]:first-of-type,input[type="checkbox"]:first-of-type{
     margin-left: 0em;
@@ -54,14 +70,13 @@ input[type="radio"]:first-of-type,input[type="checkbox"]:first-of-type{
 .ptDetailsnav{
     width: 100%;
     display: inline-block;
-    margin-bottom: .25em;
+    margin-bottom: .5em;
 }
 .ptDetailsnav a{
     padding: .25em;
 }
-.ptDetailsnav a:first-of-type{
-    margin-left: 0em;
-}
+
+
 @media screen and (min-width: 430px){
 /*    fieldset{
         width: 40%;
@@ -71,11 +86,7 @@ input[type="radio"]:first-of-type,input[type="checkbox"]:first-of-type{
 
 
 
-.tabcontent fieldset{
-    width: 30%;
-    display: inline-block;
-    border-bottom: 1px solid #999;
-}
+
 .inputs{
     margin-bottom: .5em;
     display: inline-block;
