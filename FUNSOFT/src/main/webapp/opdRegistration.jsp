@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Out-Patient Registration form</title>
         <link rel="stylesheet" href="CSS/index.css"/>
     </head>
     <body>
@@ -95,7 +95,7 @@
                 </fieldset>
 
             </div>
-            <div>
+            <fieldset>
                 <div class="ptDetailsnav">
                     <a class="tablink" onclick="openPage('ptBioData', this, 'red')" id="defaultOpen" >Patient Bio Data</a>
                     <a class="tablink" onclick="openPage('demographics', this, 'green')" >Demographic Info</a>
@@ -112,7 +112,15 @@
 
                 <div id="ptBioData" class="tabcontent">
                     <fieldset>
-                        <legend>patient details</legend>
+                        <legend>Patient details</legend>
+                        <div class="inputs">
+                            <label for="ptRegServicePoint">Registration Service Point</label>
+                            <select  id="ptRegServicePoint" name="ptRegServicePoint" required >
+                                <option value="">Select</option>
+                                <option value="In-Patient">In-Patient</option>
+                                <option value="Out-Patient">Out-Patient</option>
+                            </select>
+                        </div>
                         <div class="inputs">
                             <label for="ptUrgency">Patient Urgency</label>
                             <select  id="ptUrgency" name="ptUrgency" required >
@@ -193,6 +201,21 @@
                         </div>
 
                         <div class="inputs">
+                            <label for="ptEmailAddr"> Email address </label>
+                            <input id="ptEmailAddr" type="email"  name="ptEmailAddr"/>
+                        </div>
+
+
+                        <div class="inputs">
+                            <label for="ptPhoneNo"> Phone No.  </label>
+                            <input id="ptPhoneNo" type="text"  name="ptPhoneNo"/>
+                        </div>
+                        <div class="inputs">
+                            <label for="ptIdPassportNo">  ID/Passport No. </label>
+                            <input id="ptIdPassportNo" type="text"  name="ptIdPassportNo"/>
+                        </div>
+
+                        <div class="inputs">
                             <label> Patient with disability  </label>
                             <select  id="ptDisabled" name="ptDisabled" required >
                                 <option value="">Select</option>
@@ -215,70 +238,155 @@
                     </fieldset>
 
                     <!--Contact and Location details fieldset-->
-                    <fieldset>
-                        <legend>Contact and Location details</legend>
-                        <div class="inputs">
-                            <label for="ptIdPassportNo">  ID/Passport No. </label>
-                            <input id="ptIdPassportNo" type="text"  name="ptIdPassportNo"/>
-                        </div>
+                    <div class="ptDetailsSubContainer">
 
-                        <div class="inputs">
-                            <label for="ptPhoneNo"> Phone No.  </label>
-                            <input id="ptPhoneNo" type="text"  name="ptPhoneNo"/>
-                        </div>
+                        <fieldset>
+                            <legend>Patient location details</legend>
+                            <div class="inputs">
+                                <label for="ptNationality">Nationality</label>
+                                <select  id="ptNationality" name="ptNationality" required >
+                                    <option value="">Select</option>
+                                    <option value="Kenya">Kenya</option>
+                                    <option value="Uganda">Uganda</option>
 
-                        <div class="inputs">
-                            <label for="ptNationality">Nationality</label>
-                            <select  id="ptNationality" name="ptNationality" required >
-                                <option value="">Select</option>
-                                <option value="Kenya">Kenya</option>
-                                <option value="Uganda">Uganda</option>
+                                </select>
+                            </div>
 
-                            </select>
-                        </div>
+                            <div class="inputs">
+                                <label for="ptCounty">County</label>
+                                <select  id="ptCounty" name="ptCounty" required >
+                                    <option value="">Select</option>
+                                    <option value="Garissa">Garissa</option>
+                                </select>
+                            </div>
 
-                        <div class="inputs">
-                            <label for="ptCounty">County</label>
-                            <select  id="ptCounty" name="ptCounty" required >
-                                <option value="">Select</option>
-                                <option value="Garissa">Garissa</option>
-                            </select>
-                        </div>
+                            <div class="inputs">
+                                <label for="ptSubCounty">Sub County</label>
+                                <select  id="ptSubCounty" name="ptSubCounty" required >
+                                    <option value="">Select</option>
+                                    <option value="Igoji">Igoji</option>
+                                </select>
+                            </div>
 
-                        <div class="inputs">
-                            <label for="ptSubCounty">Sub County</label>
-                            <select  id="ptSubCounty" name="ptSubCounty" required >
-                                <option value="">Select</option>
-                                <option value="Igoji">Igoji</option>
-                            </select>
-                        </div>
 
-                        <div class="inputs">
-                            <label for="ptEmailAddr"> Email address </label>
-                            <input id="ptEmailAddr" type="email"  name="ptEmailAddr"/>
-                        </div>
 
-                        <div class="inputs">
-                            <label for="ptPostalAddr">Postal address</label>
-                            <input id="ptPostalAddr" type="text"  name="ptPostalAddr"/>
-                        </div>
+                            <div class="inputs">
+                                <label for="ptPostalAddr">Postal address</label>
+                                <input id="ptPostalAddr" type="text"  name="ptPostalAddr"/>
+                            </div>
 
-                        <div class="inputs">
-                            <label for="ptHomeVillage">Home Village </label>
-                            <input id="ptHomeVillage" type="text"  name="ptHomeVillage"/>
-                        </div>
+                            <div class="inputs">
+                                <label for="ptHomeVillage">Home Village </label>
+                                <input id="ptHomeVillage" type="text"  name="ptHomeVillage"/>
+                            </div>
+                            <div class="inputs">
+                                <label for="ptPhysResidence">Physical Residence </label>
+                                <input id="ptPhysResidence" type="text"  name="ptPhysResidence"/>
+                            </div>
+                            <div class="inputs">
+                                <label for="ptPlaceOfBirth">Place of Birth </label>
+                                <input id="ptPlaceOfBirth" type="text"  name="ptPlaceOfBirth"/>
+                            </div>
 
-                        <div class="inputs">
-                            <label>NHIF registered</label>
-                            <input id="ptNHIFRegistered" type="checkbox"  name="ptNHIFRegistered"/>
-                            <input id="ptNHIFRegisteredChildren" type="text"  name="ptNHIFRegisteredChildren" placeholder="No of children"/>
-                        </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Patient Other details</legend>
 
-                        <div class="inputs">
-                            <label for="ptNHIFClaimNo"> NHIF Claim Number  </label>
-                            <input id="ptNHIFClaimNo" type="text"  name="ptNHIFClaimNo"/>
-                        </div>
-                    </fieldset>
+
+
+                            <div class="inputs">
+                                <label>NHIF registered</label>
+                                <input id="ptNHIFRegistered" type="checkbox"  name="ptNHIFRegistered"/>
+                                <input id="ptNHIFRegisteredChildren" type="text"  name="ptNHIFRegisteredChildren" placeholder="No of children"/>
+                            </div>
+
+                            <div class="inputs">
+                                <label for="ptNHIFClaimNo"> NHIF Claim Number  </label>
+                                <input id="ptNHIFClaimNo" type="text"  name="ptNHIFClaimNo"/>
+                            </div>
+                            <div class="inputs">
+                                <label for="ptOldFileNo">Old File No. </label>
+                                <input id="ptOldFileNo" type="text"  name="ptOldFileNo"/>
+                            </div>
+                            <div class="inputs">
+                                <label for="ptOtherNos">Other Numbers </label>
+                                <input id="ptOtherNos" type="text"  name="ptOtherNos"/>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="ptDetailsSubContainer">
+                        <fieldset>
+                            <legend>Patient Referral details</legend>
+                            <div class="inputs">
+                                <label for="ptRefferalType"> Refferal Type </label>
+                                <input id="ptRefferalType" type="text"  name="ptRefferalType"/>
+                            </div>
+
+
+                            <div class="inputs">
+                                <label for="ptReferralFacility"> Refferal Facility </label>
+                                <input id="ptReferralFacility" type="text"  name="ptReferralFacility"/>
+                            </div>
+                            <div class="inputs">
+                                <label for="ptReferralCounty">  Refferal County </label>
+                                <input id="ptReferralCounty" type="text"  name="ptReferralCounty"/>
+                            </div>
+
+
+
+                        </fieldset>
+                        <fieldset>
+                            <legend>Next of Kin details</legend>
+                            <div class="inputs"> 
+                                <input id="ptBroughtByNOK" type="radio"   value="NOK" name="ptBroughtBy"/>
+                                <label for="ptBroughtByNOK"> Next of Kin </label>
+                                <input id="ptBroughtByGoodSamaritan" type="radio" value="GoodSamaritan"  name="ptBroughtBy"/>
+                                <label for="ptBroughtByGoodSamaritan"> Good samaritan </label>
+
+                            </div>
+
+
+                            <div class="inputs">
+                                <label for="ptNOKNames"> NOK Full Names  </label>
+                                <input id="ptNOKNames" type="text"  name="ptNOKNames"/>
+                            </div>  
+                            <div class="inputs">
+                                <label for="ptNOKRelationship">NOK  Relation  </label>
+                                <select  id="ptNOKRelationship" name="ptNOKRelationship" required >
+                                    <option value="">Select</option>
+                                    <option value="Brother">Sister</option>
+                                    <option value="Sister">Sister</option>
+
+                                </select>
+                            </div>  
+                            <div class="inputs">
+                                <label for="ptNOKIdPassportNo"> NOK ID/Passport No. </label>
+                                <input id="ptNOKIdPassportNo" type="text"  name="ptNOKIdPassportNo"/>
+                            </div>  
+                            <div class="inputs">
+                                <label for="ptNOKPhoneNo">NOK Phone No.  </label>
+                                <input id="ptNOKPhoneNo" type="text"  name="ptNOKPhoneNo"/>
+                            </div>
+                            <div class="inputs">
+                                <label for="ptNOKPostalAddr">  Postal Address </label>
+                                <input id="ptNOKPostalAddr" type="text"  name="ptNOKPostalAddr"/>
+                            </div>
+                            <div class="inputs">
+                                <label for="ptNOKresidence">  NOK Physical residence </label>
+                                <input id="ptNOKresidence" type="text"  name="ptNOKresidence"/>
+                            </div>
+
+
+
+
+
+
+
+                        </fieldset>
+                    </div>
+
+
 
                 </div>
                 <div id="demographics" class="tabcontent">
@@ -336,7 +444,7 @@
                     // Get the element with id="defaultOpen" and click on it
                     document.getElementById("defaultOpen").click();
                 </script>
-            </div>
+            </fieldset>
         </form>
     </body>
 </html>
