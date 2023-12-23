@@ -7,24 +7,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : mo
 */
 
-*{
+html{
     margin: 0;
     padding: 0;
     font-size: 12px;
-    
+    width: 100%;
+
 }
+
 .ptDetailsSubContainer{
-        width: 30%;
-        display: inline-block;  
+    width: 33%;
+    display: inline-block;
 }
 .ptDetailsSubContainer > fieldset{
     border: 1px solid #999;
 }
 .tabcontent > fieldset{
-    width: 30%;
+    width: 33%;
     display: inline-block;
     border: 1px solid #999;
 }
+/*@media screen and (max-width: 630px){
+    .tabcontent > fieldset{
+        display: block;
+    }
+}*/
 fieldset{
     padding: 1em;
     border-top: 2px solid #ccc;
@@ -40,26 +47,75 @@ legend{
 }
 label{
     display: inline-block;
-    margin-left : .25em; 
-}re
+    margin-left : .25em;
+}
 label:first-of-type{
     margin-left: 0em;
 }
-input[type="email"],input[type="text"], input[type="date"]{
-    width: 15em;
-    height: 1.25em;
-    text-align: center;
-    background-color: #ccb;
-    border: 1px solid #000;
-    border-radius: 3px;
+input[type="email"],input[type="text"], input[type="date"], input[type="tel"]{
+    /*    width: 15em;
+        height: 1.25em;*/
+    /*border: 1px solid #000;*/
+
+    font-size: 16px;
+    font-size: max(16px, 1em);
+    font-family: inherit;
+    padding: 0.25em;
+    background-color: #fff;
+    border: 2px solid var(--input-border);
+    border-radius: 4px;
+
+    line-height: 1;
+    height: 2.25rem;
+    
+    
 }
 
 select{
-     width: 15em;
-    height: 2em;
+    /*height: 2em;*/
+    /*border: 1px solid #000;*/
+    background: white;
+    border-radius: 4px;
+
+    font-size: 16px;
+    font-size: max(16px, 1em);
+    font-family: inherit;
+    padding: 0.25em;
+    background-color: #fff;
+    border: 2px solid var(--input-border);
+    border-radius: 4px;
+    line-height: 1;
+    height: 2.25rem;
 }
+.tabcontent  select, .tabcontent  input[type="text"], .tabcontent  input[type="date"], .tabcontent  input[type="tel"], .tabcontent  input[type="email"]{
+    float: right;
+    width: 15em;
+
+}
+.tabcontent label{
+}
+select:not(.tabcontent select){
+    width: 10em;
+}
+
 input[type="radio"],input[type="checkbox"] {
-    margin-left: 1.5em
+    margin-left: 1.5em;
+
+
+}
+input[readonly]{
+    border-style: dotted;
+    cursor: not-allowed;
+    color: #777;
+}
+input:focus{
+    border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+    box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.8);
+    transition: 190ms box-shadow ease-in-out;
+    outline: 3px solid transparent;
+}
+select:focus{
+    border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
 }
 .maritalStatus input[type="radio"] {
     margin-left: 0.1em
@@ -77,11 +133,12 @@ input[type="radio"]:first-of-type,input[type="checkbox"]:first-of-type{
 }
 
 
+
 @media screen and (min-width: 430px){
-/*    fieldset{
-        width: 40%;
-        min-width: 320px;
-    }*/
+    /*    fieldset{
+            width: 40%;
+            min-width: 320px;
+        }*/
 }
 
 
@@ -90,11 +147,26 @@ input[type="radio"]:first-of-type,input[type="checkbox"]:first-of-type{
 .inputs{
     margin-bottom: .5em;
     display: inline-block;
-    width: 100%;
+    width: 98%;
+    overflow: auto;
 }
 
 
 .tablink{
     border: 1px solid black;
     border-radius: 3px;
+}
+sup{
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+}
+:root{
+    --input-border: #8b8a8b;
+    --input-focus-h: 245;
+    --input-focus-s: 100%;
+    --input-focus-l: 42%;
+}
+*,*::before,*::after{
+    box-sizing: border-box;
 }

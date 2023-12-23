@@ -197,18 +197,19 @@
 
                         <div class="inputs">
                             <label for="ptDOB"> Date of Birth </label>
+                            <sup>*</sup>
                             <input id="ptDOB" type="date"  name="ptDOB" required/>
                         </div>
 
                         <div class="inputs">
                             <label for="ptEmailAddr"> Email address </label>
-                            <input id="ptEmailAddr" type="email"  name="ptEmailAddr"/>
+                            <input id="ptEmailAddr" type="email"  name="ptEmailAddr" inputmode="email"/>
                         </div>
-
+<!--TODO: add inputmode to inputs-Available values: none, test, decimal, numeric, tel,search,email,url-->
 
                         <div class="inputs">
                             <label for="ptPhoneNo"> Phone No.  </label>
-                            <input id="ptPhoneNo" type="text"  name="ptPhoneNo"/>
+                            <input id="ptPhoneNo" type="tel"  name="ptPhoneNo"/>
                         </div>
                         <div class="inputs">
                             <label for="ptIdPassportNo">  ID/Passport No. </label>
@@ -366,7 +367,7 @@
                             </div>  
                             <div class="inputs">
                                 <label for="ptNOKPhoneNo">NOK Phone No.  </label>
-                                <input id="ptNOKPhoneNo" type="text"  name="ptNOKPhoneNo"/>
+                                <input id="ptNOKPhoneNo" type="tel"  name="ptNOKPhoneNo"/>
                             </div>
                             <div class="inputs">
                                 <label for="ptNOKPostalAddr">  Postal Address </label>
@@ -445,6 +446,7 @@
                     document.getElementById("defaultOpen").click();
                 </script>
             </fieldset>
+            <input type="submit" value="submit" name="submit"/>
         </form>
     </body>
 </html>
