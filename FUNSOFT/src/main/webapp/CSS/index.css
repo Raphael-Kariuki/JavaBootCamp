@@ -6,7 +6,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Created on : Dec 22, 2023, 10:02:21 PM
     Author     : mo
 */
-
+*,*::before,*::after{
+    box-sizing: border-box;
+}
 html{
     margin: 0;
     padding: 0;
@@ -14,24 +16,14 @@ html{
     width: 100%;
 
 }
-
-.ptDetailsSubContainer{
-    width: 33%;
+.ptDetailsnav{
+    width: 100%;
     display: inline-block;
+    margin-bottom: .5em;
 }
-.ptDetailsSubContainer > fieldset{
-    border: 1px solid #999;
+.ptDetailsnav a{
+    padding: .25em;
 }
-.tabcontent > fieldset{
-    width: 33%;
-    display: inline-block;
-    border: 1px solid #999;
-}
-/*@media screen and (max-width: 630px){
-    .tabcontent > fieldset{
-        display: block;
-    }
-}*/
 fieldset{
     padding: 1em;
     border-top: 2px solid #ccc;
@@ -45,6 +37,40 @@ legend{
     color: #000000;
     font-weight: bold;
 }
+.tabcontent > fieldset{
+    width: 33%;
+    display: inline-block;
+    border: 1px solid #999;
+}
+.tablink{
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.ptDetailsSubContainer{
+    width: 33%;
+    display: inline-block;
+}
+.ptDetailsSubContainer > fieldset{
+    border: 1px solid #999;
+}
+.inputs{
+    margin-bottom: .5em;
+    display: inline-block;
+    width: 98%;
+    overflow: auto;
+}
+sup{
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+}
+/*@media screen and (max-width: 630px){
+    .tabcontent > fieldset{
+        display: block;
+    }
+}*/
+
 label{
     display: inline-block;
     margin-left : .25em;
@@ -70,34 +96,6 @@ input[type="email"],input[type="text"], input[type="date"], input[type="tel"]{
     
     
 }
-
-select{
-    /*height: 2em;*/
-    /*border: 1px solid #000;*/
-    background: white;
-    border-radius: 4px;
-
-    font-size: 16px;
-    font-size: max(16px, 1em);
-    font-family: inherit;
-    padding: 0.25em;
-    background-color: #fff;
-    border: 2px solid var(--input-border);
-    border-radius: 4px;
-    line-height: 1;
-    height: 2.25rem;
-}
-.tabcontent  select, .tabcontent  input[type="text"], .tabcontent  input[type="date"], .tabcontent  input[type="tel"], .tabcontent  input[type="email"]{
-    float: right;
-    width: 15em;
-
-}
-.tabcontent label{
-}
-select:not(.tabcontent select){
-    width: 10em;
-}
-
 input[type="radio"],input[type="checkbox"] {
     margin-left: 1.5em;
 
@@ -114,24 +112,58 @@ input:focus{
     transition: 190ms box-shadow ease-in-out;
     outline: 3px solid transparent;
 }
-select:focus{
-    border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+input[type="radio"]:first-of-type,input[type="checkbox"]:first-of-type{
+    margin-left: 0em;
 }
 .maritalStatus input[type="radio"] {
     margin-left: 0.1em
 }
-input[type="radio"]:first-of-type,input[type="checkbox"]:first-of-type{
-    margin-left: 0em;
-}
-.ptDetailsnav{
-    width: 100%;
-    display: inline-block;
-    margin-bottom: .5em;
-}
-.ptDetailsnav a{
-    padding: .25em;
-}
+select{
+    /*height: 2em;*/
+    /*border: 1px solid #000;*/
+    background: white;
+    border-radius: 4px;
 
+}
+select{
+    /*reset appearance , like removing the default drop down arrow*/
+    appearance: none;
+    background-color: transparent;
+    padding: 0 1em 0 0;
+    margin: 0;
+    /*width: 100%;*/
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    
+}
+.inputs select{
+    width: 50%;
+    min-width: 15ch;
+    max-width: 50%;
+    border: 1px solid var(--select-border);
+    border-radius: 0.25em;
+    padding: .25em .5em;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1;
+    /*background-color: #fff;*/
+    /*background-image: linear-gradient(to top, #f9f9f9, #fff 33%);*/
+    
+}
+.inputs select::after{
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    background-color: var(--select-arrow);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100% );
+}
+.tabcontent  select, .tabcontent  input[type="text"], .tabcontent  input[type="date"], .tabcontent  input[type="tel"], .tabcontent  input[type="email"]{
+    float: right;
+    width: 50%;
+
+}
 
 
 @media screen and (min-width: 430px){
@@ -142,31 +174,13 @@ input[type="radio"]:first-of-type,input[type="checkbox"]:first-of-type{
 }
 
 
-
-
-.inputs{
-    margin-bottom: .5em;
-    display: inline-block;
-    width: 98%;
-    overflow: auto;
-}
-
-
-.tablink{
-    border: 1px solid black;
-    border-radius: 3px;
-}
-sup{
-    color: red;
-    font-weight: bold;
-    font-size: 14px;
-}
 :root{
     --input-border: #8b8a8b;
     --input-focus-h: 245;
     --input-focus-s: 100%;
     --input-focus-l: 42%;
-}
-*,*::before,*::after{
-    box-sizing: border-box;
+    
+    --select-border: #777;
+    --select-focus: blue;
+    --select-arrow: var(--select-border);
 }
