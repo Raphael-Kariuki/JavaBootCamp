@@ -20,6 +20,7 @@
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
+                text-decoration: none;
             }
 
             body {
@@ -28,23 +29,99 @@
             }
             header{
                 position: fixed;
-                top:0;
+                top: 0;
                 left: 0;
-                background: black;
-                height: 50px;
+                right: 0;
+                background: white;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 1000;
+            }
+            header .logo{
+                font-weight: bolder;
+                font-size: 25px;
+                color: #333;
+            }
+            header .navbar ul{
+                list-style: none;
+            }
+            header .navbar ul li{
+                position: relative;
+                float: left;
+            }
+            header .navbar ul li a{
+                font-size: 20px;
+                padding: 20px;
+                color: #333;
+                display: block;
+            }
+            header .navbar ul li a:hover{
+                background: #333;
+                color: #fff;
+            }
+            header .navbar ul li ul{
+                position: absolute;
+                left: 0;
+                width: 200px;
+                background: #fff;
+                display: none;
+            }
+            header .navbar ul li ul li{
                 width: 100%;
+                border-top: 1px solid rgba(0,0,0,0.1);
+            }
+            header .navbar ul li ul li ul{
+                left: 200px;
+                top:0;
+            }
+            header .navbar ul li:focus-within > ul,
+            header .navbar ul li:hover > ul{
+                display: initial;
+            }
+            #menu-bar{
+                display: none;
+            }
+            header label{
+                font-size: 20px;
+                color: #333;
+                cursor: pointer;
+                display: none;
             }
 
-            nav{
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            nav a{
-                text-decoration: none;
-                margin-left: 40px;
+            @media(max-width: 991px){
+                header{
+                    padding: 20px;
+
+                }
+                header label{
+                    display: initial;
+
+                }
+                header .navbar{
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background: #fff;
+                    border-top: 1px solid rgba(0,0,0,0.1);
+                    display:none;
+                }
+                header .navbar ul li{
+                    width: 100%;
+                }
+                header .navbar ul li ul{
+                    position: relative;
+                    width: 100%;
+                }
+                header .navbar ul li ul li{
+                    background: #eee;
+                    width: 90%;
+                    left: 10%;
+                }
+                #menu-bar:checked ~ .navbar{
+                    display: initial;
+                }
             }
             .container{
                 position: relative;
@@ -62,7 +139,7 @@
                 justify-content: space-around;
                 min-height: calc(100% - 10px);
                 max-height: calc(100% - 10px);
-                background: #04AA6D;
+               border:1px solid #04AA6D;
             }
 
             /* Make circles that indicate the steps of the form: */
@@ -171,26 +248,49 @@
     </head>
     <body>
         <header>
-            <nav>
-                <div class="menu-item">
-                    <a href="#"><span></span>Home</a>
+            <a  class="logo" href="#"> Logo</a>
+            <input type="checkbox" id="menu-bar">
+            <label for="menu-bar">Menu</label>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Services +</a>
+                        <ul>
+                            <li><a href="">Citizen</a></li>
+                            <li><a href="">Non-Citizen</a></li>
+                            <li><a href="">Foreigner+</a>
+                                <ul>
+                                    <li><a href="">Australia</a></li>
+                                    <li><a href="">American</a></li>
+                                    <li><a href="">European</a></li>
 
-<!--TODO: steup drop down menu-->
-                </div>
-                <div class="menu-item">
-                    <a href="#"><span></span>Gallery</a>
+                                </ul>
 
-                </div>
+                            </li>
 
+                        </ul>
+
+                    </li>
+                    <li><a href="">Gallery+</a>
+                        <ul>
+                            <li><a href="">Grid Gallery</a></li>
+                            <li><a href="">Flex Gallery</a></li>
+
+                        </ul>
+
+                    </li>
+                    <li><a href="">About us</a></li>
+                    <li><a href="">contact us</a></li>
+                </ul>
 
             </nav>
         </header>
         <div class="container">
             <div class="steps">
-<!--                TODO: setup layout as follows
-                1: Set <p> opacity to match that of step
-                2: Decorate font
-                3: Align items-->
+                <!--                TODO: setup layout as follows
+                                1: Set <p> opacity to match that of step
+                                2: Decorate font
+                                3: Align items-->
                 <div class="div-step">
                     <p> Basic info</p>
                     <span class="step">1</span>
